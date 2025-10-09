@@ -15,9 +15,8 @@ El sistema cubrirá todo el proceso:
 - **Mateo** — Desarrollador Front-End 
 - **Ulices** — Scrum Manager / Desarrollador Front-End  
 - **Jorge** — Desarrollador Back-End  
-- **Lucas** — Desarrollador Back-End   
-- **Francisco** — Desarrollador Back-End  
-- **Pablo** — UX / QA / Testing  
+- **Lucas** — Desarrollador Back-End / BD
+- **Francisco** — Desarrollador Back-End
 
 ## ⚙️ Tecnologías a implementar
 - **Back-End:** Python (en evaluación: Node.js)  
