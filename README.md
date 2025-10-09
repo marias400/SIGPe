@@ -10,13 +10,13 @@ El sistema cubrirá todo el proceso:
 - Entrega y seguimiento para el hospital universitario  
 
 ## 👥 Integrantes del equipo
-- **Agustín** — Product Owner / Scrum Manager  
-- **Mariano** — Scrum Master / Desarrollador Front-End
-- **Mateo** — Desarrollador Front-End 
-- **Ulices** — Scrum Manager / Desarrollador Front-End  
-- **Jorge** — Desarrollador Back-End  
-- **Lucas** — Desarrollador Back-End / BD
-- **Francisco** — Desarrollador Back-End
+- **Agustín Álvarez** — Product Owner / Scrum Manager  
+- **Mariano Arias Simone** — Scrum Master / Desarrollador Front-End
+- **Mateo Sánchez** — Desarrollador Front-End 
+- **Ulices Barros Muñoz** — Scrum Manager / Desarrollador Front-End  
+- **Jorge Padula** — Desarrollador Back-End  
+- **Lucas de la Fuente** — Desarrollador Back-End / BD
+- **Francisco Ártico** — Desarrollador Back-End
 
 ## ⚙️ Tecnologías a implementar
 - **Back-End:** Python (en evaluación: Node.js)  
