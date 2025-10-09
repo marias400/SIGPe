@@ -2,7 +2,7 @@
 **Laboratorio 3D Médico**
 
 ## 📌 Descripción del proyecto
-El **Sistema Integral de Gestión de Pedidos (SIGPe)** es una plataforma diseñada para gestionar pedidos de impresión 3D en un laboratorio universitario orientado a la medicina.  
+El **Sistema Integral de Gestión de Pedidos (SIGPe)** es una plataforma diseñada para gestionar pedidos que administrará el Laboratorio de Diseño y Fabricación Digital de la UNLaR.  
 
 El sistema cubrirá todo el proceso:  
 - Registro y toma de pedidos  
