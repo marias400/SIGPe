@@ -30,4 +30,4 @@ El sistema cubrirá todo el proceso:
   - Ideas para mostrar servicios, información del laboratorio y tipos de materiales con ventajas y desventajas  
 - [ClickUp](https://clickup.com)
   - Idea de como se pueden mostrar las Especialidades Médicas y las impresiones disponibles para cada una. 
-- [ClickUp](https://raomed.com.ar/)   
+- [RAOMED](https://raomed.com.ar/)   
