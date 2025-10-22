@@ -28,4 +28,6 @@ El sistema cubrirá todo el proceso:
   - Referencia para la página de inicio y uso de imágenes  
 - [RGBESTUDIO](https://rgbestudio.com.ar/)  
   - Ideas para mostrar servicios, información del laboratorio y tipos de materiales con ventajas y desventajas  
-- [ClickUp](https://clickup.com)  
+- [ClickUp](https://clickup.com)
+  - Idea de como se pueden mostrar las Especialidades Médicas y las impresiones disponibles para cada una. 
+- [ClickUp](https://raomed.com.ar/)   
