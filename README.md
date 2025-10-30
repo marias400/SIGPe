@@ -11,10 +11,12 @@ El sistema cubrirá todo el proceso:
 
 ## 👥 Integrantes del equipo
 - **Agustín Álvarez** — Product Owner / Scrum Manager  
-- **Mariano Arias Simone** — Scrum Master / Desarrollador Front-End
-- **Mateo Sánchez** — Desarrollador Front-End  
-- **Jorge Padula** — Desarrollador Back-End  
-- **Lucas de la Fuente** — Desarrollador Back-End / BD
+- **Mariano Arias Simone** — Scrum Master / Desarrollador Back-End
+- **Mateo Sánchez** — Desarrollador Front-End
+- **Lucas de la Fuente** — Desarrollador Front-End
+- **Jorge Padula** — Desarrollador Back-End
+- **Jeremías Álvarez** — QA/Testing
+- **Nahuel Peralta** — UX/UI
 
 ## ⚙️ Tecnologías a implementar
 - **Back-End:** Python (en evaluación: Node.js)  
