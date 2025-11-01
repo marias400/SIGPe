@@ -1,28 +1,26 @@
-import { useState } from 'react';
-import AuthService from "../services/auth.service";
+import { AuthContext } from "../auth/AuthContext.jsx";
+import { useState, useContext } from "react";
 
-const Login = () => {
 
+const Login = (AuthProvider) => {
+    const { login } = useContext(AuthContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const loginForm = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            setMessage(""); // Reset message on new submission
-            const data = await AuthService.login(username, password);
-            console.log("Login exitoso:", data);
-            setMessage("Inicio de sesión correcto ✅");
-        } catch (error) {
-            const errorMessage = "Usuario o contraseña incorrectos ❌";
-            setMessage(errorMessage);
-        }
+        setLoading(true);
+        const result = await login(username, password);
+        setLoading(false);
+        if (result.email) console.log("Login exitoso:", result); //hacer una redirect
+        else setError(result.error);
     };
 
     return (
         <div>
-            <form onSubmit={loginForm}>
+            <form onSubmit={handleSubmit}>
                 <h2>Iniciar Sesión</h2>
                 <div>
                     <label htmlFor="username">Email:</label>
@@ -44,9 +42,7 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <div>
-                    {message && <p>{message}</p>}
-                </div>
+                {loading && <p>Cargando...</p>}
                 <button type="submit">Ingresar</button>
             </form>
         </div>
