@@ -1,5 +1,13 @@
 # Frontend - SIGPe
 
+## Configuración del entorno y ejecución
+
+```bash
+# Desarrollo
+npm install
+npm run dev          # Inicia el servidor de desarrollo
+```
+
 ## Descripción del Proyecto
 
 SIGPe es una aplicación web desarrollada en React que permite la gestión de pedidos y órdenes. El frontend está construido con React 19.1.1 y Vite, siguiendo una arquitectura escalable y modular basada en componentes reutilizables.
@@ -251,20 +259,6 @@ src/
 - JSDoc para funciones complejas
 - README en cada carpeta de componente importante
 - Storybook para documentar componentes (recomendado)
-
-## Scripts Disponibles
-
-```bash
-# Desarrollo
-npm run dev          # Inicia el servidor de desarrollo
-
-# Producción
-npm run build        # Construye la aplicación para producción
-npm run preview      # Previsualiza la build de producción
-
-# Calidad de código
-npm run lint         # Ejecuta ESLint
-```
 
 ## Dependencias Principales
 

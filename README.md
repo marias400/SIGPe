@@ -31,3 +31,9 @@ El sistema cubrirá todo el proceso:
 - [ClickUp](https://clickup.com)
   - Idea de como se pueden mostrar las Especialidades Médicas y las impresiones disponibles para cada una. 
 - [RAOMED](https://raomed.com.ar/)   
+
+
+## Montaje de desarrollo
+
+- [Backend](https://github.com/marias400/SIGPe/blob/232510bd9ed6b37a013d8524dcc6edd75c3e6939/backend/README.md)
+- [Frontend](https://github.com/marias400/SIGPe/tree/6be65f169165deaeb4af591a97a2dccf42ae9eba/frontend#readme)
