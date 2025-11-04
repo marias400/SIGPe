@@ -38,6 +38,85 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+DROP TABLE IF EXISTS `pedidos_impresion`;
+
+CREATE TABLE `pedidos_impresion` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+
+  -- Relación y datos básicos
+  `user_id` bigint unsigned DEFAULT NULL, -- cliente (opcional si tomás email directo)
+  `email_contacto` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `cliente_nombre` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `titulo` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL, -- breve descripción del pedido
+
+  -- Estado y prioridad
+  `estado` enum('nuevo','en_revision','cotizado','aprobado','en_cola','imprimiendo','fallido','post_proceso','listo','entregado','cancelado')
+      CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'nuevo',
+  `prioridad` tinyint unsigned NOT NULL DEFAULT 3, -- 1=alta, 5=baja
+  `is_urgente` tinyint(1) NOT NULL DEFAULT 0,
+
+  -- Fechas
+  `fecha_entrega_estimada` date DEFAULT NULL,
+  `fecha_entregado` datetime DEFAULT NULL,
+
+  -- Archivo / modelo
+  `archivo_nombre` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `archivo_url` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `archivo_hash` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL, -- p.ej. sha256
+  `cantidad` int unsigned NOT NULL DEFAULT 1,
+
+  -- Parámetros de impresión
+  `material` enum('PLA','PETG','ABS','TPU','ASA','Nylon','Otro')
+      CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'PLA',
+  `color` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `boquilla_mm` decimal(3,2) DEFAULT 0.40,
+  `altura_capa_mm` decimal(4,3) DEFAULT 0.200,
+  `relleno_pct` tinyint unsigned DEFAULT 15, -- 0..100
+  `perimetros` tinyint unsigned DEFAULT 2,
+  `capas_superiores` tinyint unsigned DEFAULT 4,
+  `capas_inferiores` tinyint unsigned DEFAULT 4,
+  `soportes` enum('ninguno','automatico','manual')
+      CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'ninguno',
+  `adhesion_cama` enum('ninguna','brim','raft')
+      CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'ninguna',
+  `escala_pct` tinyint unsigned DEFAULT 100,
+
+  -- Estimaciones / costos
+  `tiempo_estimado_min` int unsigned DEFAULT NULL,
+  `peso_estimado_g` int unsigned DEFAULT NULL,
+  `costo_estimado` decimal(10,2) DEFAULT NULL,
+  `costo_final` decimal(10,2) DEFAULT NULL,
+
+  -- Logística
+  `metodo_entrega` enum('retiro','envio_correo','moto')
+      CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'retiro',
+  `direccion_entrega` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci,
+
+  -- Flags estándar
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+
+  -- Timestamps
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`),
+  KEY `idx_estado` (`estado`),
+  KEY `idx_fecha_entrega_estimada` (`fecha_entrega_estimada`),
+  CONSTRAINT `fk_pedidos_user`
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+    ON UPDATE CASCADE ON DELETE SET NULL,
+
+  -- Reglas básicas
+  CONSTRAINT `chk_relleno_pct` CHECK (`relleno_pct` BETWEEN 0 AND 100),
+  CONSTRAINT `chk_escala_pct` CHECK (`escala_pct` BETWEEN 10 AND 500),
+  CONSTRAINT `chk_boquilla_mm` CHECK (`boquilla_mm` > 0 AND `boquilla_mm` <= 1.00),
+  CONSTRAINT `chk_altura_capa_mm` CHECK (`altura_capa_mm` > 0 AND `altura_capa_mm` <= 1.00)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
