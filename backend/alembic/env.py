@@ -6,6 +6,12 @@ from sqlalchemy import pool
 from core.config_loader import settings
 from core.database import Base
 from user.models import user
+from doctor.models import doctor
+from order.models import order
+from model3d.models import model3d
+from patient.models import patient
+from notification.models import notification
+from observation.models import observation
 
 from alembic import context
 
@@ -69,10 +75,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection,
-            target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

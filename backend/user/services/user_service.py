@@ -33,6 +33,25 @@ def create_user(db: Session, user: UserCreate):
     return db_user
 
 
+def update_user(db: Session, user_id: int, user_update):
+    db_user = db.query(User).filter(User.id == user_id).first()
+    if not db_user:
+        return None
+
+    if user_update.email is not None:
+        db_user.email = user_update.email
+    if user_update.name is not None:
+        db_user.name = user_update.name
+    if user_update.lastname is not None:
+        db_user.lastname = user_update.lastname
+    if user_update.password is not None:
+        db_user.password = get_password_hash(user_update.password)
+
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+
 def delete_user(db: Session, user_id: int):
     db_user = db.query(User).filter(User.id == user_id).first()
     if db_user:
