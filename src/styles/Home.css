@@ -1,0 +1,211 @@
+/* src/styles/Home.css */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
+  width: 100%;
+}
+
+.home-container.dark {
+  background-color: #0c111a; /* dark background */
+}
+
+.home-main {
+  flex-grow: 1;
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 480px;
+  height: 100vh;
+  padding: 2rem;
+  margin: 0;
+  width: 100%;
+  background-image: linear-gradient(rgba(18,60,98,0.6), rgba(18,60,98,0.8)),
+    url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyhmhL0Fkf2G1LhFUY9zVCyBm1DtVwg1EiF_r97aPzgQ6xPjYiuhs72Nr7w7HKiqsCJytwo8-fCH570Ge51fTp_CctilgoySa91xgkseqEtwhbUtMR7Dxnj7Gjg7K0ZjCV7YV7iKVzz3HLfNjLYJHP2j0ouezJ9iMbz_XBQy4nJ1Y26ANYlNgpMFB-7jUdtUosJU9coBOvMQxrs6pFlb3bZs-OoqMTBJk74EjbMc7ACM772t5wgK1TULA5CA3JsKMHHbtS0FcpSHs");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.hero-bg {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.hero-content h2 {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.5rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  background-color: #1d4ed8; /* blue */
+  color: white;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+}
+
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255,255,255,0.3);
+}
+
+/* Sections */
+.section {
+  padding: 4rem 1rem;
+  text-align: center;
+  background-color: #f0f4f8;
+}
+
+.section.dark {
+  background-color: #0c111a;
+}
+
+.section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.section p {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: #334155;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-btn {
+  margin-top: 2rem;
+}
+
+/* Materiales */
+.materiales-section {
+  background-color: #ffffff;
+}
+
+.materiales-section.dark {
+  background-color: #111827;
+}
+
+.materiales-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 640px) {
+  .materiales-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .materiales-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.material-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1rem;
+  background-color: #f0f4f8;
+  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.material-card:hover {
+  transform: scale(1.05);
+}
+
+.material-card img {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+}
+
+.material-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.material-info h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.material-info p {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #475569;
+  flex-grow: 1;
+}
+
+.btn-material {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(29, 78, 216, 0.1);
+  color: #1d4ed8;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-material:hover {
+  background-color: rgba(29, 78, 216, 0.2);
+}

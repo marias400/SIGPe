@@ -1,0 +1,55 @@
+.notification-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 2px solid transparent; /* default */
+  background-color: transparent; /* fondo transparente */
+  color: #111; /* texto */
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Efecto hover opcional */
+.notification-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Ícono */
+.notification-card .material-symbols-outlined {
+  font-size: 32px;
+  color: inherit; /* hereda el color del borde */
+}
+
+/* Texto */
+.notification-card .title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.notification-card .desc {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* === Colores de borde e ícono (según prop `color`) === */
+.notification-card.blue {
+  border-color: #1d5b96;
+  color: #1d5b96; /* para el ícono */
+}
+
+.notification-card.red {
+  border-color: #e11d48;
+  color: #e11d48;
+}
+
+.notification-card.green {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.notification-card.yellow {
+  border-color: #eab308;
+  color: #eab308;
+}

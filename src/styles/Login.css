@@ -1,0 +1,18 @@
+/* src/styles/login.css */
+
+/* Ajustes específicos para la página de Login */
+.auth-container {
+  background-color: #f0f4f8; /* un fondo distinto solo en login */
+}
+
+.auth-form-container {
+  border: 2px solid #5cb0e5; /* borde para diferenciar login */
+}
+
+.auth-submit-btn {
+  background-color: #1f6aa6; /* color distinto al de register */
+}
+
+.auth-submit-btn:hover {
+  background-color: #155a8c;
+}

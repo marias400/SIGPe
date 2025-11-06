@@ -1,0 +1,333 @@
+/* src/styles/Cotizacion.css */
+
+.cotizacion-page {
+  min-height: 100vh;
+  background-color: var(--color-background-light);
+}
+
+.main-content {
+  padding: 2rem 0;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+}
+
+.intro h1 {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.intro p {
+  font-size: 1.1rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.seleccion-protesis {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.seccion-cotizacion {
+  margin-bottom: 2.5rem;
+}
+
+.seccion-cotizacion h3 {
+  font-size: 1.3rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Botones */
+.btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background-color: var(--color-primary-light);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background-color: #d1d5db;
+}
+
+.btn-cotizar {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--color-primary);
+  color: white;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+}
+
+.btn-cotizar:hover {
+  background-color: #1f2937;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.2);
+}
+
+/* Especialidades */
+.especialidades {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Grid de prótesis */
+.protesis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.protesis-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.protesis-card:hover {
+  border-color: var(--color-primary-light);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.protesis-card.selected {
+  border-color: var(--color-primary-light);
+  border-width: 3px;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+}
+
+.img-protesis {
+  width: 100%;
+  height: 150px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.protesis-card h4 {
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.precio-base {
+  font-size: 1rem;
+  color: var(--color-primary-light);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.tag.material {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.tag.size {
+  background-color: #f3e8ff;
+  color: #6b21a8;
+}
+
+/* Selects */
+.select-custom {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: white;
+  color: var(--color-primary);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.select-custom:hover {
+  border-color: var(--color-primary-light);
+}
+
+.select-custom:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Urgencia */
+.urgencia {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Resultado de cotización */
+.resultado-cotizacion {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.cotizacion-card {
+  background-color: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.cotizacion-card h2 {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.detalle-cotizacion {
+  margin-bottom: 2rem;
+}
+
+.item-detalle {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.item-detalle:last-child {
+  border-bottom: none;
+}
+
+.item-detalle .label {
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.item-detalle .valor {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.precio-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.label-precio {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.valor-precio {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary-light);
+}
+
+.acciones-cotizacion {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.acciones-cotizacion .btn {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .intro h1 {
+    font-size: 2rem;
+  }
+
+  .protesis-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .especialidades,
+  .urgencia {
+    flex-direction: column;
+  }
+
+  .especialidades .btn,
+  .urgencia .btn {
+    width: 100%;
+  }
+
+  .cotizacion-card {
+    padding: 1.5rem;
+  }
+
+  .cotizacion-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .valor-precio {
+    font-size: 1.5rem;
+  }
+
+  .acciones-cotizacion {
+    flex-direction: column;
+  }
+
+  .acciones-cotizacion .btn {
+    width: 100%;
+  }
+}
