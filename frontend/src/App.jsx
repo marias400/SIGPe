@@ -1,37 +1,26 @@
-// src/App.jsx
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider } from "./auth/AuthContext.jsx";
+import PageNotFound from './views/PageNotFound.jsx';
+import Login from './views/Login.jsx';
 
-// Importamos las páginas
-import Home from "./pages/Home";
-import QuienesSomos from "./pages/QuienesSomos";
-import Dashboard from "./pages/Dashboard";
+function App() {
 
-// Componentes fijos (por ejemplo, barra de navegación)
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-
-
-export default function App() {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Navbar visible en todas las páginas */}
-      <Navbar />
-
-        {/* Contenido principal */}
-      <main className="flex-grow">
+    <AuthProvider>
+      <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/quienes-somos" element={<QuienesSomos />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-
-          {/* Ruta no encontrada */}
-          <Route path="*" element={<h2>Página no encontrada</h2>} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </main>
-
-      {/* Footer visible en todas las páginas */}
-      <Footer />
-    </div>
-  );
+      </Router>
+    </AuthProvider>
+  )
 }
+
+export default App

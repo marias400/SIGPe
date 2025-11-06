@@ -31,3 +31,9 @@ El sistema cubrirá todo el proceso:
 - [ClickUp](https://clickup.com)
   - Idea de como se pueden mostrar las Especialidades Médicas y las impresiones disponibles para cada una. 
 - [RAOMED](https://raomed.com.ar/)   
+
+
+## Montaje de desarrollo
+
+- [Backend](backend/README.md)
+- [Frontend](frontend/README.md)
