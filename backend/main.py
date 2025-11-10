@@ -2,6 +2,20 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from core.config_loader import settings
 
+# Importar todos los modelos para asegurar que estén registrados en SQLAlchemy
+# Esto permite que SQLAlchemy resuelva las relaciones por nombre correctamente
+from user.models.user import User
+from doctor.models.doctor import Doctor
+from order.models.order import Order
+from model3d.models.model3d import Model3D
+from patient.models.patient import Patient
+from notification.models.notification import Notification
+from observation.models.observation import Observation
+from speciality.models.speciality import Speciality
+from prosthesis.models.prosthesis import Prosthesis
+from material.models.material import Material
+from size.models.size import Size
+
 from auth.routes.auth_router import auth_router
 from user.routes.user_router import user_router
 from doctor.routes.doctor_router import doctor_router
@@ -10,6 +24,7 @@ from model3d.routes.model3d_router import model3d_router
 from patient.routes.patient_router import patient_router
 from notification.routes.notification_router import notification_router
 from observation.routes.observation_router import observation_router
+from speciality.routes.speciality_router import speciality_router
 
 openapi_tags = [
     {
@@ -41,6 +56,10 @@ openapi_tags = [
         "description": "Observation operations",
     },
     {
+        "name": "Specialities",
+        "description": "Speciality operations",
+    },
+    {
         "name": "Health Checks",
         "description": "Application health checks",
     },
@@ -67,6 +86,7 @@ app.include_router(model3d_router, prefix="/api", tags=["3D Models"])
 app.include_router(patient_router, prefix="/api", tags=["Patients"])
 app.include_router(notification_router, prefix="/api", tags=["Notifications"])
 app.include_router(observation_router, prefix="/api", tags=["Observations"])
+app.include_router(speciality_router, prefix="/api", tags=["Specialities"])
 
 
 @app.get("/health", tags=["Health Checks"])

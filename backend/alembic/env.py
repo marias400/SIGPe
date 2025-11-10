@@ -5,13 +5,17 @@ from sqlalchemy import pool
 
 from core.config_loader import settings
 from core.database import Base
-from user.models import user
-from doctor.models import doctor
-from order.models import order
-from model3d.models import model3d
-from patient.models import patient
-from notification.models import notification
-from observation.models import observation
+from user.models.user import User
+from doctor.models.doctor import Doctor
+from order.models.order import Order
+from model3d.models.model3d import Model3D
+from patient.models.patient import Patient
+from notification.models.notification import Notification
+from observation.models.observation import Observation
+from speciality.models.speciality import Speciality
+from prosthesis.models.prosthesis import Prosthesis
+from material.models.material import Material
+from size.models.size import Size
 
 from alembic import context
 

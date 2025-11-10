@@ -14,5 +14,5 @@ class Doctor(Base):
     is_verified: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
     # Relación con User (usando string para evitar importación circular)
-    user: Mapped["User"] = relationship("User", backref="doctor")
+    user: Mapped["User"] = relationship("User", back_populates="doctor")
 

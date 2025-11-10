@@ -3,5 +3,7 @@ from .doctor_service import (
     validate_doctor_request,
     get_doctor_by_user_id,
     get_all_pending_doctor_requests,
+    update_doctor_info,
+    get_all_doctors,
 )
 

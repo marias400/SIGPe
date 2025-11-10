@@ -3,7 +3,13 @@ from sqlalchemy.orm import Session
 
 from auth.services.auth_service import get_current_active_user
 from core.database import get_db
-from model3d.schemas.model3d import Model3DCreate, Model3DSchema, Model3DUpdate
+from model3d.schemas.model3d import (
+    Model3DCreate, 
+    Model3DSchema, 
+    Model3DUpdate,
+    PresignedUrlRequest,
+    PresignedUrlResponse
+)
 from model3d.services.model3d_service import (
     create_model3d,
     get_model3d,
@@ -12,10 +18,50 @@ from model3d.services.model3d_service import (
     update_model3d,
     delete_model3d,
 )
+from model3d.services.s3_service import generate_presigned_upload_url
 from order.services.order_service import get_order
 from user.models.user import User
 
 model3d_router = APIRouter(prefix="/models3d", tags=["3D Models"])
+
+
+@model3d_router.post("/presigned-url", response_model=PresignedUrlResponse)
+def get_presigned_upload_url(
+    request: PresignedUrlRequest,
+    current_user: User = Depends(get_current_active_user),
+):
+    """
+    Genera una URL prefirmada de S3 para subir un archivo 3D directamente desde el frontend.
+    El usuario debe estar autenticado.
+    """
+    try:
+        # Validar que el archivo tenga una extensión permitida
+        allowed_extensions = ['.stl', '.obj', '.gltf', '.glb']
+        file_extension = None
+        for ext in allowed_extensions:
+            if request.file_name.lower().endswith(ext):
+                file_extension = ext
+                break
+        
+        if not file_extension:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Formato de archivo no permitido. Formatos permitidos: {', '.join(allowed_extensions)}"
+            )
+        
+        presigned_data = generate_presigned_upload_url(
+            file_name=request.file_name,
+            file_type=request.file_type
+        )
+        
+        return presigned_data
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error al generar URL prefirmada: {str(e)}"
+        )
 
 
 @model3d_router.post("/", response_model=Model3DSchema)

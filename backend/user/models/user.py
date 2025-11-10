@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, Boolean, DateTime
 from core.database import Base
 from datetime import datetime, timezone
@@ -23,3 +23,5 @@ class User(Base):
         default=datetime.now(timezone.utc),
         onupdate=datetime.now(timezone.utc),
     )
+
+    doctor = relationship("Doctor", back_populates="user", uselist=False)

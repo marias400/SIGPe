@@ -1,5 +1,4 @@
 from typing import Annotated
-
 from jwt.exceptions import InvalidTokenError
 from auth.models.token import TokenData
 from auth.utils.auth_utils import verify_password
@@ -19,7 +18,7 @@ ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token")
 
 
-def authenticate_user(email: str, password: str, db:Session = Depends(get_db)):
+def authenticate_user(email: str, password: str, db: Session = Depends(get_db)):
     user = get_user_by_email(db, email)
     if not user:
         return False
@@ -39,7 +38,9 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db:Session = Depends(get_db)):
+async def get_current_user(
+    token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)
+):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -63,39 +64,41 @@ async def get_current_active_user(current_user: User = Depends(get_current_user)
     return current_user
 
 
-async def get_current_technician_user(current_user: User = Depends(get_current_active_user)):
+async def get_current_technician_user(
+    current_user: User = Depends(get_current_active_user),
+):
     """Verifica que el usuario actual sea de tipo 'tecnico'"""
     if current_user.user_type != "tecnico":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Solo los usuarios de tipo 'tecnico' pueden realizar esta acción"
+            detail="Solo los usuarios de tipo 'tecnico' pueden realizar esta acción",
         )
     return current_user
 
 
 async def get_current_verified_doctor_user(
-    current_user: User = Depends(get_current_active_user),
-    db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)
 ):
     """Verifica que el usuario actual sea un doctor verificado"""
     if current_user.user_type != "doctor":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Solo los doctores pueden realizar esta acción"
+            detail="Solo los doctores pueden realizar esta acción",
         )
-    
+
     # Verificar que el doctor existe y está verificado
     from doctor.services.doctor_service import get_doctor_by_user_id
+
     doctor = get_doctor_by_user_id(db, current_user.id)
     if not doctor:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="No se encontró información de doctor para este usuario"
+            detail="No se encontró información de doctor para este usuario",
         )
     if not doctor.is_verified:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Solo los doctores verificados pueden realizar esta acción"
+            detail="Solo los doctores verificados pueden realizar esta acción",
         )
-    
+
     return current_user

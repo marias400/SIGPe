@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from user.schemas.user import UserSchema
 
 
 class DoctorCreate(BaseModel):
@@ -31,6 +32,19 @@ class DoctorSchema(BaseModel):
     institution_name: Optional[str] = None
     speciality: Optional[str] = None
     is_verified: bool
+
+    class Config:
+        from_attributes = True
+
+
+class DoctorWithUserSchema(BaseModel):
+    """Schema que incluye la información del doctor y del usuario"""
+    user_id: int
+    license_number: Optional[str] = None
+    institution_name: Optional[str] = None
+    speciality: Optional[str] = None
+    is_verified: bool
+    user: Optional[UserSchema] = None
 
     class Config:
         from_attributes = True

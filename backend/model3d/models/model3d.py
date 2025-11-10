@@ -14,6 +14,8 @@ class Model3D(Base):
     file_format: Mapped[Optional[str]] = mapped_column(String(45), nullable=True)
     file_size: Mapped[Optional[str]] = mapped_column(String(45), nullable=True)
     file_path: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    s3_key: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    s3_url: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=datetime.now(timezone.utc), nullable=False
     )

@@ -10,7 +10,8 @@
 }
 
 .home-container.dark {
-  background-color: #0c111a; /* dark background */
+  background-color: #0c111a;
+  /* dark background */
 }
 
 .home-main {
@@ -29,8 +30,8 @@
   padding: 2rem;
   margin: 0;
   width: 100%;
-  background-image: linear-gradient(rgba(18,60,98,0.6), rgba(18,60,98,0.8)),
-    url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyhmhL0Fkf2G1LhFUY9zVCyBm1DtVwg1EiF_r97aPzgQ6xPjYiuhs72Nr7w7HKiqsCJytwo8-fCH570Ge51fTp_CctilgoySa91xgkseqEtwhbUtMR7Dxnj7Gjg7K0ZjCV7YV7iKVzz3HLfNjLYJHP2j0ouezJ9iMbz_XBQy4nJ1Y26ANYlNgpMFB-7jUdtUosJU9coBOvMQxrs6pFlb3bZs-OoqMTBJk74EjbMc7ACM772t5wgK1TULA5CA3JsKMHHbtS0FcpSHs");
+  background-image: linear-gradient(rgba(18, 60, 98, 0.6), rgba(18, 60, 98, 0.8)),
+    url("../assets/Landing_image.avif");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -66,7 +67,8 @@
 
 .btn-primary {
   padding: 0.75rem 1.5rem;
-  background-color: #1d4ed8; /* blue */
+  background-color: #1d4ed8;
+  /* blue */
   color: white;
   font-weight: bold;
   border-radius: 0.5rem;
@@ -81,7 +83,7 @@
 
 .btn-secondary {
   padding: 0.75rem 1.5rem;
-  background-color: rgba(255,255,255,0.2);
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
   font-weight: bold;
   border-radius: 0.5rem;
@@ -93,7 +95,7 @@
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Sections */
@@ -160,7 +162,7 @@
   overflow: hidden;
   border-radius: 1rem;
   background-color: #f0f4f8;
-  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
 

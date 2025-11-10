@@ -1,287 +1,289 @@
 # Frontend - SIGPe
 
-## Configuración del entorno y ejecución
+Sistema Integral de Gestión de Pedidos - Aplicación Web Frontend
+
+## 📋 Descripción
+
+Frontend desarrollado con **React 19** y **Vite** que proporciona la interfaz de usuario para el sistema SIGPe. Incluye gestión de órdenes, autenticación, dashboard administrativo, y visualización de modelos 3D.
+
+## 🚀 Configuración del Entorno
+
+### Prerrequisitos
+
+- Node.js 18 o superior
+- npm o yarn
+- Backend ejecutándose (ver [README del Backend](../backend/README.md))
+
+### 1. Instalar Dependencias
 
 ```bash
-# Desarrollo
+cd frontend
 npm install
-npm run dev          # Inicia el servidor de desarrollo
 ```
 
-## Descripción del Proyecto
+### 2. Configurar Variables de Entorno (Opcional)
 
-SIGPe es una aplicación web desarrollada en React que permite la gestión de pedidos y órdenes. El frontend está construido con React 19.1.1 y Vite, siguiendo una arquitectura escalable y modular basada en componentes reutilizables.
+Actualmente, la URL del backend está configurada directamente en el código como `http://localhost:8000/api`. Si deseas usar variables de entorno para diferentes ambientes, puedes crear un archivo `.env` en la raíz del directorio `frontend/`:
 
-## Estructura de Carpetas
+```env
+# URL del backend API
+VITE_API_URL=http://localhost:8000/api
+```
+
+**Nota:** En Vite, las variables de entorno deben comenzar con `VITE_` para ser accesibles en el código del cliente.
+
+Luego, actualiza los archivos que usan `API_URL` para usar `import.meta.env.VITE_API_URL`:
+
+```javascript
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+```
+
+**Archivos que actualmente usan API_URL:**
+- `src/auth/AuthContext.jsx`
+- `src/views/Cotizacion.jsx`
+- `src/components/Navbar.jsx`
+- `src/components/dashboard/UsersSection.jsx`
+- Y otros componentes que hacen llamadas al API
+
+### 3. Ejecutar en Modo Desarrollo
+
+```bash
+npm run dev
+```
+
+El servidor de desarrollo estará disponible en: `http://localhost:5173` (puerto por defecto de Vite)
+
+### 4. Compilar para Producción
+
+```bash
+npm run build
+```
+
+Los archivos compilados se generarán en el directorio `dist/`.
+
+### 5. Previsualizar Build de Producción
+
+```bash
+npm run preview
+```
+
+## 🏗️ Estructura del Proyecto
 
 ```
 frontend/
-├── public/                 # Archivos estáticos
+├── public/              # Archivos estáticos
+│   └── assets/          # Imágenes y recursos
 ├── src/
-│   ├── components/         # Componentes reutilizables
-│   ├── views/             # Páginas/Vistas principales
-│   │   ├── about_us/      # Página "Acerca de nosotros"
-│   │   ├── dashboard/     # Panel de control principal
-│   │   ├── landing/       # Página de inicio
-│   │   ├── login/         # Página de inicio de sesión
-│   │   ├── order_detail/  # Detalle de pedido específico
-│   │   ├── orders/        # Lista de pedidos
-│   │   └── register/      # Página de registro
-│   ├── App.jsx            # Componente principal de la aplicación
-│   └── main.jsx           # Punto de entrada de la aplicación
-├── package.json           # Dependencias y scripts
-├── vite.config.js         # Configuración de Vite
-└── eslint.config.js       # Configuración de ESLint
+│   ├── auth/            # Contexto y lógica de autenticación
+│   │   └── AuthContext.jsx
+│   ├── components/      # Componentes reutilizables
+│   │   ├── dashboard/   # Componentes del dashboard
+│   │   └── user-details/ # Componentes de detalles de usuario
+│   ├── views/           # Vistas/páginas principales
+│   │   ├── Cotizacion.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   └── ...
+│   ├── styles/          # Archivos CSS
+│   │   ├── global.css
+│   │   └── ...
+│   ├── App.jsx          # Componente principal
+│   └── main.jsx         # Punto de entrada
+├── index.html           # HTML principal
+├── package.json         # Dependencias y scripts
+├── vite.config.js       # Configuración de Vite
+└── eslint.config.js     # Configuración de ESLint
 ```
 
-## Arquitectura de Componentes
+## 📦 Dependencias Principales
 
-### 1. Estructura de Views (Páginas)
+### Producción
 
-Cada vista representa una página completa de la aplicación y está organizada en carpetas separadas para facilitar el mantenimiento:
+- **react** (^19.1.1): Biblioteca principal de React
+- **react-dom** (^19.1.1): Renderizado de React en el DOM
+- **react-router-dom** (^7.9.4): Enrutamiento de la aplicación
+- **axios** (^1.13.1): Cliente HTTP para peticiones al API
+- **@fortawesome/react-fontawesome**: Iconos FontAwesome
 
-#### **Landing Page** (`/views/landing/`)
-- **Propósito**: Página de inicio que presenta la aplicación
-- **Componentes sugeridos**:
-  - `HeroSection.jsx` - Sección principal con call-to-action
-  - `FeaturesSection.jsx` - Características principales
-  - `TestimonialsSection.jsx` - Testimonios de usuarios
+### Desarrollo
 
-#### **Autenticación** (`/views/login/` y `/views/register/`)
-- **Propósito**: Gestión de usuarios y autenticación
-- **Componentes sugeridos**:
-  - `LoginForm.jsx` - Formulario de inicio de sesión
-  - `RegisterForm.jsx` - Formulario de registro
-  - `AuthLayout.jsx` - Layout común para páginas de auth
+- **vite** (^7.1.7): Build tool y servidor de desarrollo
+- **@vitejs/plugin-react**: Plugin de React para Vite
+- **eslint**: Linter para JavaScript/React
 
-#### **Dashboard** (`/views/dashboard/`)
-- **Propósito**: Panel de control principal del usuario
-- **Componentes sugeridos**:
-  - `DashboardHeader.jsx` - Encabezado con navegación
-  - `StatsCards.jsx` - Tarjetas de estadísticas
-  - `RecentOrders.jsx` - Pedidos recientes
-  - `QuickActions.jsx` - Acciones rápidas
+## 🔐 Autenticación
 
-#### **Gestión de Pedidos** (`/views/orders/` y `/views/order_detail/`)
-- **Propósito**: Lista y detalle de pedidos
-- **Componentes sugeridos**:
-  - `OrdersList.jsx` - Lista de pedidos con filtros
-  - `OrderCard.jsx` - Tarjeta individual de pedido
-  - `OrderFilters.jsx` - Filtros y búsqueda
-  - `OrderDetail.jsx` - Vista detallada de un pedido
-  - `OrderStatus.jsx` - Estado del pedido
-  - `OrderItems.jsx` - Items del pedido
+El frontend usa **JWT (JSON Web Tokens)** para la autenticación. El token se almacena en `localStorage` y se incluye en todas las peticiones autenticadas.
 
-#### **Acerca de Nosotros** (`/views/about_us/`)
-- **Propósito**: Información sobre la empresa
-- **Componentes sugeridos**:
-  - `AboutHero.jsx` - Sección principal
-  - `TeamSection.jsx` - Equipo de trabajo
-  - `MissionVision.jsx` - Misión y visión
+### Flujo de Autenticación
 
-### 2. Componentes Reutilizables (`/components/`)
+1. **Login:** El usuario ingresa credenciales → se obtiene el token → se guarda en `localStorage`
+2. **Verificación:** Al cargar la app, se verifica si existe un token válido
+3. **Peticiones:** Todas las peticiones al API incluyen el token en el header `Authorization: Bearer <token>`
+4. **Logout:** Se elimina el token de `localStorage`
 
-Los componentes reutilizables deben estar organizados por funcionalidad:
+### Contexto de Autenticación
 
-```
-components/
-├── ui/                    # Componentes de interfaz básicos
-│   ├── Button/
-│   │   ├── Button.jsx
-│   │   ├── Button.module.css
-│   │   └── index.js
-│   ├── Input/
-│   ├── Modal/
-│   ├── Card/
-│   └── Loading/
-├── forms/                 # Componentes de formularios
-│   ├── FormField/
-│   ├── FormValidation/
-│   └── FormSubmit/
-├── layout/                # Componentes de layout
-│   ├── Header/
-│   ├── Sidebar/
-│   ├── Footer/
-│   └── Layout/
-├── data/                  # Componentes de visualización de datos
-│   ├── Table/
-│   ├── Pagination/
-│   ├── Search/
-│   └── Filters/
-└── business/              # Componentes específicos del negocio
-    ├── OrderCard/
-    ├── StatusBadge/
-    └── UserProfile/
-```
+El `AuthContext` proporciona:
+- `user`: Usuario actual autenticado
+- `login(username, password)`: Función para iniciar sesión
+- `logout()`: Función para cerrar sesión
+- `register(name, lastname, email, password)`: Función para registrar usuario
+- `authFetch(url, options)`: Función helper para peticiones autenticadas
 
-## Principios de Diseño
+## 🎨 Estilos
 
-### 1. **Componentes Atómicos**
-- Cada componente debe tener una responsabilidad única
-- Componentes pequeños y enfocados en una funcionalidad específica
-- Fácil testing y mantenimiento
+El proyecto usa CSS modular por componente. Cada componente tiene su archivo CSS correspondiente en `src/styles/`.
 
-### 2. **Reutilización**
-- Componentes genéricos en `/components/ui/`
-- Componentes específicos del negocio en `/components/business/`
-- Props bien definidas para máxima flexibilidad
+### Estilos Globales
 
-### 3. **Composición**
-- Construir componentes complejos combinando componentes simples
-- Uso de children y render props cuando sea apropiado
+- `global.css`: Estilos globales y variables CSS
 
-### 4. **Consistencia**
-- Nomenclatura consistente (PascalCase para componentes)
-- Estructura de carpetas uniforme
-- Patrones de importación estandarizados
+## 🛣️ Rutas de la Aplicación
 
-## Convenciones de Nomenclatura
+Las rutas están definidas en `App.jsx` usando React Router:
 
-### Archivos y Carpetas
-- **Componentes**: PascalCase (`UserProfile.jsx`)
-- **Carpetas**: kebab-case (`user-profile/`)
-- **Hooks**: camelCase con prefijo `use` (`useAuth.js`)
-- **Utilidades**: camelCase (`formatDate.js`)
+- `/` - Página de inicio
+- `/login` - Página de inicio de sesión
+- `/register` - Página de registro
+- `/cotizacion` - Formulario de cotización/creación de orden
+- `/dashboard` - Dashboard administrativo (requiere autenticación)
+- `/user/:id` - Detalles de usuario (requiere autenticación)
 
-### Estructura de Componentes
-```jsx
-// Ejemplo de estructura de componente
-import React from 'react';
-import PropTypes from 'prop-types';
-import './ComponentName.module.css';
+## 🔌 Integración con el Backend
 
-const ComponentName = ({ prop1, prop2, children }) => {
-  return (
-    <div className="component-name">
-      {children}
-    </div>
-  );
-};
+### Endpoints Principales Utilizados
 
-ComponentName.propTypes = {
-  prop1: PropTypes.string.isRequired,
-  prop2: PropTypes.number,
-  children: PropTypes.node
-};
+- `POST /api/auth/token` - Login
+- `GET /api/auth/me` - Obtener usuario actual
+- `GET /api/users/me` - Obtener datos del usuario autenticado
+- `POST /api/users` - Registrar nuevo usuario
+- `GET /api/orders` - Obtener órdenes
+- `POST /api/orders` - Crear nueva orden
+- `GET /api/specialities` - Obtener especialidades
+- `GET /api/prostheses` - Obtener prótesis
+- `GET /api/materials` - Obtener materiales
+- `GET /api/notifications` - Obtener notificaciones
+- Y más...
 
-ComponentName.defaultProps = {
-  prop2: 0
-};
+### Configuración de CORS
 
-export default ComponentName;
+Asegúrate de que el backend tenga configurado CORS para permitir peticiones desde el frontend. En el backend, configura `BACKEND_CORS_ORIGINS` en el archivo `.env`:
+
+```env
+BACKEND_CORS_ORIGINS=http://localhost:5173,http://localhost:3000
 ```
 
-## Gestión de Estado
+## 🧪 Testing
 
-### Recomendaciones para Estado Global
-- **Context API** para estado de autenticación
-- **useReducer** para estado complejo de formularios
-- **useState** para estado local de componentes
-
-### Estructura de Contextos Sugerida
-```
-src/
-├── contexts/
-│   ├── AuthContext.jsx    # Contexto de autenticación
-│   ├── OrderContext.jsx   # Contexto de pedidos
-│   └── ThemeContext.jsx   # Contexto de tema
+```bash
+# Ejecutar linter
+npm run lint
 ```
 
-## Estilos y CSS
+## 📱 Características Principales
 
-### Estrategia de Estilos
-- **CSS Modules** para estilos específicos de componentes
-- **CSS Variables** para temas y colores globales
-- **Styled Components** o **Emotion** para estilos dinámicos (opcional)
+### Dashboard Administrativo
 
-### Estructura de Estilos
+- Gestión de usuarios
+- Gestión de órdenes
+- Gestión de prótesis
+- Gestión de notificaciones
+- Visualización de estadísticas
+
+### Formulario de Cotización
+
+- Selección de especialidad médica
+- Selección de prótesis
+- Selección de tamaño y material
+- Carga de modelos 3D (integración con AWS S3)
+- Información médica adicional (para doctores)
+- Cálculo automático de precios
+
+### Sistema de Notificaciones
+
+- Notificaciones en tiempo real
+- Contador de notificaciones no leídas
+- Dropdown de notificaciones en el navbar
+
+## 🐛 Solución de Problemas
+
+### Error de conexión al backend
+
+- Verifica que el backend esté ejecutándose en `http://localhost:8000`
+- Revisa la configuración de CORS en el backend
+- Verifica que la URL del API sea correcta en los componentes
+
+### Error de módulos no encontrados
+
+- Ejecuta `npm install` para reinstalar dependencias
+- Verifica que Node.js esté actualizado
+
+### Error de autenticación
+
+- Verifica que el token esté guardado en `localStorage`
+- Revisa la consola del navegador para errores de red
+- Asegúrate de que el backend esté configurado correctamente
+
+### Problemas con Vite
+
+- Limpia la caché: `rm -rf node_modules/.vite`
+- Reinstala dependencias: `rm -rf node_modules && npm install`
+
+## 📝 Notas de Desarrollo
+
+### Convenciones de Código
+
+- Usar componentes funcionales con hooks
+- Usar `AuthContext` para autenticación
+- Usar `authFetch` para peticiones autenticadas
+- Mantener estilos en archivos CSS separados
+
+### Mejoras Futuras Sugeridas
+
+- Centralizar la configuración de `API_URL` usando variables de entorno
+- Implementar manejo de errores global
+- Agregar tests unitarios y de integración
+- Implementar lazy loading para rutas
+- Agregar loading states globales
+- Implementar sistema de notificaciones toast
+
+## 📚 Recursos
+
+- [Documentación de React](https://react.dev/)
+- [Documentación de Vite](https://vitejs.dev/)
+- [Documentación de React Router](https://reactrouter.com/)
+- [Documentación de FontAwesome](https://fontawesome.com/docs)
+
+## 🔄 Scripts Disponibles
+
+- `npm run dev` - Inicia el servidor de desarrollo
+- `npm run build` - Compila la aplicación para producción
+- `npm run preview` - Previsualiza el build de producción
+- `npm run lint` - Ejecuta el linter ESLint
+
+## 🌐 Despliegue
+
+Para desplegar en producción:
+
+1. Configura las variables de entorno (si las usas)
+2. Compila la aplicación: `npm run build`
+3. Los archivos en `dist/` pueden ser servidos por cualquier servidor web estático (Nginx, Apache, etc.)
+4. Configura el servidor para redirigir todas las rutas a `index.html` (para React Router)
+
+### Ejemplo de configuración Nginx
+
+```nginx
+server {
+    listen 80;
+    server_name tu-dominio.com;
+    root /ruta/a/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
 ```
-src/
-├── styles/
-│   ├── globals.css       # Estilos globales
-│   ├── variables.css     # Variables CSS
-│   └── themes/           # Temas de la aplicación
-├── components/
-│   └── ComponentName/
-│       ├── ComponentName.jsx
-│       └── ComponentName.module.css
-```
-
-## Routing y Navegación
-
-### Estructura de Rutas Sugerida
-```jsx
-// Rutas principales
-/                   # Landing page
-/login              # Inicio de sesión
-/register           # Registro
-/dashboard          # Panel principal
-/orders             # Lista de pedidos
-/orders/:id         # Detalle de pedido
-/about              # Acerca de nosotros
-```
-
-### Implementación con React Router
-```jsx
-// Estructura de rutas anidadas
-<Routes>
-  <Route path="/" element={<LandingPage />} />
-  <Route path="/auth">
-    <Route path="login" element={<LoginPage />} />
-    <Route path="register" element={<RegisterPage />} />
-  </Route>
-  <Route path="/dashboard" element={<DashboardPage />} />
-  <Route path="/orders">
-    <Route index element={<OrdersListPage />} />
-    <Route path=":id" element={<OrderDetailPage />} />
-  </Route>
-</Routes>
-```
-
-## Mejores Prácticas
-
-### 1. **Performance**
-- Lazy loading de componentes pesados
-- Memoización con `React.memo` y `useMemo`
-- Code splitting por rutas
-
-### 2. **Accesibilidad**
-- Uso de elementos semánticos
-- Atributos ARIA apropiados
-- Navegación por teclado
-
-### 3. **Testing**
-- Tests unitarios para componentes
-- Tests de integración para flujos completos
-- Mocks para dependencias externas
-
-### 4. **Documentación**
-- JSDoc para funciones complejas
-- README en cada carpeta de componente importante
-- Storybook para documentar componentes (recomendado)
-
-## Dependencias Principales
-
-- **React 19.1.1** - Biblioteca principal
-- **Vite** - Herramienta de build y desarrollo
-- **ESLint** - Linter para calidad de código
-
-## Próximos Pasos Recomendados
-
-1. **Configurar React Router** para navegación
-2. **Implementar sistema de temas** con CSS Variables
-3. **Agregar librería de componentes** (Material-UI, Chakra UI, o similar)
-4. **Configurar testing** con Jest y React Testing Library
-5. **Implementar Storybook** para documentación de componentes
-6. **Agregar TypeScript** para tipado estático (recomendado)
-
-## Wireframes del Proyecto
-
-El proyecto está basado en los siguientes wireframes:
-- **Home**: Página de inicio con diseño responsive
-- **Dashboard**: Panel de control con estadísticas y acciones rápidas
-- **Login/Registro**: Formularios de autenticación
-- **Pedidos**: Lista y detalle de pedidos
-- **Formulario de Pedido**: Creación y edición de pedidos
-
-Cada vista debe implementarse siguiendo los diseños proporcionados en la carpeta `/wireframes/` del proyecto.

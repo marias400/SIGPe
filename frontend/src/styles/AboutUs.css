@@ -1,0 +1,333 @@
+/* src/components/QuienesSomos.css */
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 360px;
+  padding: 1rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  max-width: 600px;
+  line-height: 1.2;
+}
+
+.hero-section p {
+  max-width: 800px;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.hero-section button {
+  background-color: #3b82f6;
+  /* brand-accent */
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.hero-section button:hover {
+  background-color: #2563eb;
+}
+
+/* Misión, Visión y Valores */
+.mv-values {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.main-container section h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+@media(min-width: 768px) {
+  .mv-values {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.mv-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+}
+
+.mv-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1.5rem;
+  color: #3b82f6;
+}
+
+.mv-card h3 {
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.mv-card p {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Timeline */
+.timeline {
+  border-left: 2px solid #e5e7eb;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.timeline-marker {
+  width: 12px;
+  height: 12px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  position: absolute;
+  left: -7px;
+  top: 0.25rem;
+}
+
+.timeline-item h4 {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.timeline-item p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Equipo */
+.team-section {
+  background-color: white;
+  padding: 3rem 1.5rem;
+  border-radius: 1rem;
+}
+
+.team-grid {
+  display: flex;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media(min-width: 640px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(min-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.team-member {
+  text-align: center;
+}
+
+.team-member img {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+}
+
+.team-member h4 {
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+.team-member p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.team-member .role {
+  color: #3b82f6;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+/* Nuestra Tecnología */
+.technology-section {
+  background-color: #f9fafb;
+  /* Fondo claro para contrastar, similar al de la imagen */
+  padding: 3rem 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media(min-width: 768px) {
+  .tech-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tech-item {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.tech-icon {
+  /* Color del icono (similar al azul de la marca) */
+  color: #06b6d4;
+  /* Usé un tono cian para diferenciarlo un poco de los otros íconos, puedes ajustarlo a #3b82f6 si prefieres */
+  margin-bottom: 1rem;
+}
+
+.tech-item h4 {
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.tech-item p {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Impacto en la Salud / Caso de Éxito */
+
+.impact-section {
+  padding: 3rem 1.5rem;
+}
+
+.case-content h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.case-study-card {
+  display: flex;
+  flex-direction: column;
+  /* Apilado en móviles */
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  /* Sombra suave */
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: hidden;
+  /* Para que la imagen respete el radio */
+}
+
+@media (min-width: 768px) {
+  .case-study-card {
+    flex-direction: row;
+    /* Lado a lado en escritorio */
+    text-align: left;
+  }
+}
+
+.case-image-container {
+  flex: 1;
+  /* Ocupa la mitad del espacio en escritorio */
+  background-color: #06b6d4;
+  /* Color de fondo de la imagen, si la imagen no llena el contenedor */
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.case-image-container i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-content {
+  flex: 1;
+  /* Ocupa la otra mitad del espacio en escritorio */
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.case-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #06b6d4;
+  /* Color de acento */
+  margin-bottom: 1rem;
+}
+
+.case-quote {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.case-author {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+@media (max-width: 767px) {
+  .case-content {
+    text-align: center;
+    /* Centrar contenido en móviles */
+  }
+}

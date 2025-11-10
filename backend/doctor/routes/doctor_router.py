@@ -10,6 +10,7 @@ from doctor.schemas.doctor import (
     DoctorRequest,
     DoctorSchema,
     DoctorUpdate,
+    DoctorWithUserSchema,
 )
 from doctor.services.doctor_service import (
     request_doctor_status,
@@ -17,6 +18,7 @@ from doctor.services.doctor_service import (
     get_doctor_by_user_id,
     get_all_pending_doctor_requests,
     update_doctor_info,
+    get_all_doctors,
 )
 from user.models.user import User
 
@@ -82,6 +84,18 @@ def get_my_doctor_info(
             status_code=404, detail="No se encontró información de doctor"
         )
     return doctor
+
+
+@doctor_router.get("/all", response_model=list[DoctorWithUserSchema])
+def get_all_doctors_endpoint(
+    current_user: User = Depends(get_current_technician_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Obtiene todos los doctores del sistema con su información de usuario.
+    Solo usuarios de tipo 'tecnico' pueden acceder a esta información.
+    """
+    return get_all_doctors(db)
 
 
 @doctor_router.get("/{user_id}", response_model=DoctorSchema)

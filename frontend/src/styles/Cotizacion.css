@@ -1,0 +1,870 @@
+/* src/styles/Cotizacion.css */
+
+.cotizacion-page {
+  min-height: 100vh;
+  background-color: var(--color-background-light);
+}
+
+.main-content {
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+}
+
+.intro h1 {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.intro p {
+  font-size: 1.1rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.seleccion-protesis {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.seleccion-protesis form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seccion-cotizacion {
+  margin-bottom: 2.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.seccion-cotizacion h3 {
+  font-size: 1.3rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+}
+
+/* Botones */
+.cotizacion-page .btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.cotizacion-page .btn-primary {
+  background-color: var(--color-primary-light);
+  color: white;
+}
+
+.cotizacion-page .btn-primary:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.cotizacion-page .btn-secondary {
+  background-color: #6f6f6e;
+  color: var(--color-text-dark);
+}
+
+.cotizacion-page .btn-secondary:hover {
+  background-color: #d1d5db;
+}
+
+.btn-cotizar {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--color-primary);
+  color: white;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.btn-cotizar:hover {
+  background-color: #1f2937;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.2);
+}
+
+/* Especialidades */
+.especialidades {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Grid de prótesis */
+.protesis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  justify-items: center;
+}
+
+.protesis-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.protesis-card:hover {
+  border-color: var(--color-primary-light);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.protesis-card.selected {
+  border-color: var(--color-primary-light);
+  border-width: 3px;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+}
+
+.img-protesis {
+  width: 100%;
+  height: 150px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.protesis-card h4 {
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.precio-base {
+  font-size: 1rem;
+  color: var(--color-primary-light);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.tag.material {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.tag.size {
+  background-color: #f3e8ff;
+  color: #6b21a8;
+}
+
+/* Selects */
+.select-custom {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: white;
+  color: var(--color-primary);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.select-custom:hover {
+  border-color: var(--color-primary-light);
+}
+
+.select-custom:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Urgencia */
+.urgencia {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Resultado de cotización */
+.resultado-cotizacion {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.cotizacion-card {
+  background-color: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.cotizacion-card h2 {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.detalle-cotizacion {
+  margin-bottom: 2rem;
+}
+
+.item-detalle {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.item-detalle:last-child {
+  border-bottom: none;
+}
+
+.item-detalle .label {
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.item-detalle .valor {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.precio-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.label-precio {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.valor-precio {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary-light);
+}
+
+.acciones-cotizacion {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.acciones-cotizacion .btn {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 1.5rem 0;
+  }
+
+  .seleccion-protesis {
+    max-width: 900px;
+    padding: 0 1.5rem;
+  }
+
+  .protesis-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .cotizacion-card {
+    padding: 2rem;
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem 0;
+  }
+
+  .intro {
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+
+  .intro h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .intro p {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .seleccion-protesis {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+
+  .seccion-cotizacion {
+    margin-bottom: 2rem;
+  }
+
+  .seccion-cotizacion h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Botones */
+  .btn {
+    padding: 0.7rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .btn-cotizar {
+    max-width: 100%;
+    font-size: 1rem;
+    padding: 0.9rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Especialidades */
+  .especialidades {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .especialidades .btn {
+    width: 100%;
+  }
+
+  /* Grid de prótesis */
+  .protesis-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .protesis-card {
+    padding: 1.25rem;
+  }
+
+  .img-protesis {
+    height: 120px;
+    padding: 0.75rem;
+  }
+
+  .protesis-card h4 {
+    font-size: 1rem;
+  }
+
+  .precio-base {
+    font-size: 0.95rem;
+  }
+
+  /* Selects */
+  .select-custom {
+    max-width: 100%;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+
+  textarea.select-custom {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Form fields */
+  .form-field {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-label {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  /* File upload */
+  .file-upload-area {
+    padding: 0.75rem;
+    max-width: 100%;
+  }
+
+  .file-input-label {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .file-upload-hint {
+    font-size: 0.8rem;
+    word-wrap: break-word;
+  }
+
+  /* Urgencia */
+  .urgencia {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .urgencia .btn {
+    width: 100%;
+  }
+
+  /* Resultado de cotización */
+  .cotizacion-card {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  .cotizacion-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .item-detalle {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+  }
+
+  .precio-total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .label-precio {
+    font-size: 1.1rem;
+  }
+
+  .valor-precio {
+    font-size: 1.5rem;
+  }
+
+  .acciones-cotizacion {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .acciones-cotizacion .btn {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* Modal */
+  .modal-content {
+    padding: 1.5rem;
+    width: 95%;
+    max-width: 100%;
+    margin: 1rem;
+  }
+
+  .modal-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .modal-close {
+    width: 28px;
+    height: 28px;
+    font-size: 1.25rem;
+  }
+
+  .modal-body {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .modal-footer {
+    margin-top: 1.25rem;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+}
+
+/* Responsive - Small Mobile */
+@media (max-width: 480px) {
+  .main-content {
+    padding: 0.75rem 0;
+  }
+
+  .intro h1 {
+    font-size: 1.5rem;
+  }
+
+  .intro p {
+    font-size: 0.9rem;
+  }
+
+  .seccion-cotizacion h3 {
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-cotizar {
+    font-size: 0.95rem;
+    padding: 0.85rem 1.25rem;
+  }
+
+  .protesis-card {
+    padding: 1rem;
+  }
+
+  .img-protesis {
+    height: 100px;
+  }
+
+  .protesis-card h4 {
+    font-size: 0.95rem;
+  }
+
+  .select-custom {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+  }
+
+  textarea.select-custom {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .file-upload-area {
+    max-width: 100%;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+  }
+
+  .modal-content {
+    padding: 1.25rem;
+    width: 98%;
+    margin: 0.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.1rem;
+  }
+
+  .modal-body {
+    font-size: 0.9rem;
+  }
+
+  .cotizacion-card {
+    padding: 1rem;
+  }
+
+  .cotizacion-card h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Form fields */
+.form-field {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+}
+
+/* Image inside prosthesis card */
+.img-protesis img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* File upload area */
+.file-upload-area {
+  position: relative;
+  border: 2px dashed #7c9bc4;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  background-color: #f9fafb;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.file-upload-area:hover {
+  background-color: #eef6f0;
+  border-color: #5a7fa3;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 0.7rem 1rem;
+  background-color: rgb(120, 160, 212);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-input-label:hover {
+  background-color: #9bbdf0;
+}
+
+.file-upload-hint {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.file-upload-success {
+  display: block;
+  color: #10b981;
+  margin-top: 0.25rem;
+}
+
+/* Textarea */
+textarea.select-custom {
+  resize: vertical;
+  font-family: inherit;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+/* Message styles */
+.message {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.message-success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.message-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background-color: #f3f4f6;
+  color: var(--color-primary);
+}
+
+.modal-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #374151;
+}
+
+.modal-success .modal-title {
+  color: #065f46;
+}
+
+.modal-success .modal-body {
+  color: #065f46;
+}
+
+.modal-error .modal-title {
+  color: #991b1b;
+}
+
+.modal-error .modal-body {
+  color: #991b1b;
+}
+
+.modal-warning .modal-title {
+  color: #d97706;
+}
+
+.modal-warning .modal-body {
+  color: #374151;
+}
+
+.modal-confirm-question {
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.modal-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

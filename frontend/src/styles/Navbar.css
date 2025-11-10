@@ -1,181 +1,311 @@
-/* src/styles/Navbar.css */
+/* Paleta: primario #007bff, primario hover #0056b3, fondo claro #f5f5f5 */
 
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1rem; /* py-3 px-4 */
-  background-color: #1D5B96; /* bg-primary-dark */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* shadow-md */
-  white-space: nowrap;
-  width: 100%;
-  margin: 0;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  border-bottom: 1px solid #e6e6e6;
+  position: relative;
+  z-index: 100;
 }
 
-/* Brand */
-.navbar-brand {
+/* Izquierda: logo centrado verticalmente */
+.navbar-left {
   display: flex;
   align-items: center;
-  gap: 1rem; /* gap-4 */
-  color: white;
+  flex: 0 0 auto;
 }
 
-.navbar-brand h2 {
-  font-size: 1.25rem; /* text-xl */
-  font-weight: bold;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
-}
-
-.navbar-logo {
-  width: 2rem; /* w-8 */
-  height: 2rem; /* h-8 */
-}
-
-/* Links (desktop) */
-.navbar-links {
-  display: none;
-  flex: 1;
-  justify-content: flex-end;
-  gap: 2rem; /* gap-8 */
-  align-items: center;
-}
-
-.navbar-links .links {
-  display: flex;
-  gap: 2.25rem; /* gap-9 */
-}
-
-.navbar-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 0.875rem; /* text-sm */
-  font-weight: 500; /* font-medium */
-  transition: color 0.3s;
-}
-
-.navbar-links a:hover {
-  color: #3B82F6; /* primary-light */
-}
-
-.cta-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.5rem; /* h-10 */
-  padding: 0 1rem; /* px-4 */
-  background-color: #111827; /* bg-primary */
-  color: white;
-  font-size: 0.875rem; /* text-sm */
-  font-weight: bold;
-  border-radius: 0.5rem; /* rounded-lg */
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.cta-button:hover {
-  background-color: #3B82F6; /* primary-light */
-}
-
-/* Menu button (mobile) */
-.menu-button {
+.navbar-logo img {
+  height: 48px;
+  width: auto;
   display: block;
-  color: white;
-  background: none;
-  border: none;
-  font-size: 1.875rem; /* text-3xl */
-  cursor: pointer;
 }
 
-/* Responsive */
-@media (min-width: 768px) {
-  .navbar-links {
-    display: flex;
-  }
-  .menu-button {
-    display: none;
-  }
-}
-
-@media (min-width: 640px) {
-  .navbar {
-    padding-left: 2rem; /* sm:px-8 */
-    padding-right: 2rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .navbar {
-    padding-left: 4rem; /* md:px-16 */
-    padding-right: 4rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .navbar {
-    padding-left: 6rem; /* lg:px-24 */
-    padding-right: 6rem;
-  }
-}
-
-
-/* === Usuario y notificaciones === */
-.navbar-user {
+/* Links y acciones centrales/derecha */
+.navbar-links {
   display: flex;
   align-items: center;
   gap: 1rem;
-  color: white;
+  flex: 1 1 auto;
+  justify-content: flex-end;
 }
 
-.notif-button {
-  position: relative;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.notif-button:hover {
-  color: #3B82F6;
-}
-
-.notif-dot {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 8px;
-  height: 8px;
-  background-color: #ef4444;
-  border-radius: 50%;
-}
-
-.user-info {
+.navbar-actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.user-avatar {
-  width: 36px;
-  height: 36px;
+/* Botón Cotizar usa paleta del Login.css */
+.cta-button {
+  background: #007bff;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.cta-button:hover {
+  background: #0056b3;
+}
+
+/* Estilo del burger */
+.burguer-menu {
+  display: none;
+  /* visible solo en mobile */
+  cursor: pointer;
+  color: #333;
+  font-size: 1.2rem;
+  padding: 0.35rem;
+  border-radius: 6px;
+}
+
+/* Lista de links (desktop por defecto) */
+.nav-links-list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Links dentro de la lista */
+.nav-links-list a {
+  color: #333;
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+}
+
+.nav-links-list a:hover {
+  background: rgba(0, 123, 255, 0.08);
+}
+
+/* Usuario y notificaciones */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 0 0 auto;
+}
+
+.user-info {
+  margin: 0;
+  font-weight: 600;
+  display: flex;
+  color: #222;
+  justify-content: flex-end;
+}
+
+.user-details {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.notif-button {
+  background: transparent;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  color: #333;
+  font-size: 1.05rem;
+  padding: 0.25rem;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #dc3545;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 3px 6px;
+  border-radius: 999px;
+}
+
+/* Notifications Dropdown */
+.notifications-dropdown-container {
+  position: relative;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: white;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  min-width: 320px;
+  max-width: 400px;
+  max-height: 500px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.notifications-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.notifications-dropdown-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  color: #111827;
+}
+
+.view-all-link {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.view-all-link:hover {
+  color: #0056b3;
+}
+
+.notifications-dropdown-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.notification-dropdown-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+}
+
+.notification-dropdown-item:hover {
+  background-color: #f9fafb;
+}
+
+.notification-dropdown-item.unread {
+  background-color: #fef2f2;
+  border-left: 3px solid #ef4444;
+}
+
+.notification-dropdown-header-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.notification-dropdown-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.unread-dot-small {
+  width: 8px;
+  height: 8px;
+  background-color: #ef4444;
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid white;
+  display: inline-block;
+}
+
+.notification-dropdown-message {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.notification-dropdown-date {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.no-notifications {
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
 }
 
 .user-name {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: white;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
-/* Mobile: ocultar nombre si el espacio es pequeño */
-@media (max-width: 640px) {
-  .user-name {
+.user-name:hover {
+  color: #007bff;
+}
+
+/* Responsive: en pantallas pequeñas ocultar lista y mostrar burger; al abrir, mostrar lista como dropdown */
+@media (max-width: 768px) {
+  .nav-links-list {
+    display: none;
+  }
+
+  .burguer-menu {
+    display: inline-flex;
+  }
+
+  .nav-links-list.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 10px;
+    top: calc(100% + 8px);
+    background: white;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    padding: 0.5rem;
+    gap: 0.25rem;
+    min-width: 180px;
+    border-radius: 6px;
+  }
+
+  .nav-links-list.open a {
+    padding: 0.6rem 0.75rem;
+  }
+
+  /* Opcional: reducir tamaño del logo en mobile */
+  .navbar-logo img {
+    height: 32px;
+  }
+
+  .btn-in-navbar {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .btn-in-burguer {
     display: none;
   }
 }

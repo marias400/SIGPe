@@ -12,6 +12,7 @@ from notification.services import (
     create_notification,
     get_notification,
     get_user_notifications,
+    get_user_notifications_amount,
     update_notification,
     delete_notification,
 )
@@ -47,6 +48,17 @@ def get_my_notifications(
     Obtiene todas las notificaciones del usuario autenticado.
     """
     return get_user_notifications(db, current_user.id)
+
+
+@notification_router.get("/my-notifications/count", response_model=int)
+def get_my_notifications_count(
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Obtiene la cantidad de notificaciones del usuario autenticado.
+    """
+    return get_user_notifications_amount(db, current_user.id)
 
 
 @notification_router.post("/", response_model=NotificationCreate)

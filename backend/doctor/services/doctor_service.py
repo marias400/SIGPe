@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from typing import Optional
 from fastapi import HTTPException
 from doctor.models.doctor import Doctor
@@ -123,4 +123,13 @@ def update_doctor_info(db: Session, user_id: int, doctor_update: DoctorUpdate):
     db.commit()
     db.refresh(doctor)
     return doctor
+
+
+def get_all_doctors(db: Session):
+    """Obtiene todos los doctores con la información del usuario"""
+    return (
+        db.query(Doctor)
+        .options(joinedload(Doctor.user))
+        .all()
+    )
 

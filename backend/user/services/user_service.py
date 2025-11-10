@@ -1,7 +1,7 @@
-from sqlalchemy.orm import Session
-
+from sqlalchemy.orm import Session, joinedload
 from auth.utils.auth_utils import get_password_hash
 from user.models.user import User
+from doctor.models.doctor import Doctor
 from user.schemas.user import UserCreate
 
 
@@ -11,6 +11,16 @@ def get_users(db: Session):
 
 def get_user(db: Session, user_id: int):
     return db.query(User).filter(User.id == user_id).first()
+
+
+def user_is_doctor(db: Session, user_id: int):
+    user = (
+        db.query(Doctor)
+        .join(User)
+        .filter(Doctor.user_id == user_id, Doctor.is_verified == True)
+        .first()
+    )
+    return user is not None
 
 
 def get_user_by_email(db: Session, email: str):

@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const API_URL = "http://localhost:8000/api"; // tu backend FastAPI
+  const API_URL = "http://localhost:8000/api";
 
   // Verificar si hay token al cargar la app
   const checkAuth = async () => {
@@ -29,6 +29,31 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     checkAuth();
   }, []);
+
+  // Register: crea un nuevo usuario
+  const register = async (name, lastname, email, password) => {
+    const res = await fetch(`${API_URL}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        lastname,
+        email,
+        password,
+      }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      return { error: errorData.detail };
+    }
+
+    const data = await res.json();
+    return data;
+  };
+
 
   // Login: obtiene el token y guarda usuario
   const login = async (username, password) => {
@@ -81,9 +106,24 @@ export const AuthProvider = ({ children }) => {
     return res;
   };
 
+  // Mostrar un loading mientras se verifica la autenticación
+  if (loading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        fontSize: '1.5rem'
+      }}>
+        Cargando...
+      </div>
+    );
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, authFetch }}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user, login, logout, authFetch, register }}>
+      {children}
     </AuthContext.Provider>
   );
 };

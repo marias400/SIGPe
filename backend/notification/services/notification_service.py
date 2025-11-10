@@ -32,6 +32,15 @@ def get_user_notifications(db: Session, user_id: int):
     return db.query(Notification).filter(Notification.user_id == user_id).all()
 
 
+def get_user_notifications_amount(db: Session, user_id: int):
+    """Obtiene la cantidad de notificaciones no leídas de un usuario"""
+    return (
+        db.query(Notification)
+        .filter(Notification.user_id == user_id, Notification.is_read == False)
+        .count()
+    )
+
+
 def update_notification(
     db: Session, notification_id: int, notification: NotificationUpdate
 ):

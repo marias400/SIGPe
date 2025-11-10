@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from sqlalchemy.orm import Session
 
-from auth.services.auth_service import get_current_active_user
+from auth.services.auth_service import get_current_active_user, get_current_technician_user
 from core.database import get_db
 from user.models.user import User
 from user.schemas.user import UserSchema, UserCreate, UserUpdate
@@ -27,6 +27,18 @@ user_router = APIRouter(prefix="/users", tags=["Users"])
 @user_router.get("/me", response_model=UserSchema)
 def user_list(current_user: User = Depends(get_current_active_user)):
     return current_user
+
+
+@user_router.get("/all", response_model=list[UserSchema])
+def get_all_users(
+    current_user: User = Depends(get_current_technician_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Obtiene todos los usuarios del sistema.
+    Solo usuarios de tipo 'tecnico' pueden acceder a esta información.
+    """
+    return get_users(db)
 
 
 @user_router.get("/{user_id}", response_model=UserSchema)

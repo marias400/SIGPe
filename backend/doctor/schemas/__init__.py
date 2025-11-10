@@ -1,2 +1,2 @@
-from .doctor import DoctorCreate, DoctorRequest, DoctorSchema, DoctorUpdate
+from .doctor import DoctorCreate, DoctorRequest, DoctorSchema, DoctorUpdate, DoctorWithUserSchema
 

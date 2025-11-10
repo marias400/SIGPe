@@ -8,6 +8,8 @@ class Model3DBase(BaseModel):
     file_format: Optional[str] = None
     file_size: Optional[str] = None
     file_path: Optional[str] = None
+    s3_key: Optional[str] = None
+    s3_url: Optional[str] = None
 
 
 class Model3DCreate(Model3DBase):
@@ -21,6 +23,8 @@ class Model3DUpdate(BaseModel):
     file_format: Optional[str] = None
     file_size: Optional[str] = None
     file_path: Optional[str] = None
+    s3_key: Optional[str] = None
+    s3_url: Optional[str] = None
 
 
 class Model3DSchema(Model3DBase):
@@ -32,4 +36,18 @@ class Model3DSchema(Model3DBase):
 
     class Config:
         from_attributes = True
+
+
+class PresignedUrlRequest(BaseModel):
+    """Schema para solicitar una URL prefirmada"""
+    file_name: str
+    file_type: Optional[str] = None
+
+
+class PresignedUrlResponse(BaseModel):
+    """Schema para respuesta de URL prefirmada"""
+    upload_url: str
+    fields: dict
+    s3_key: str
+    s3_url: str
 

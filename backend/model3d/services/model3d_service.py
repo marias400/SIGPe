@@ -23,10 +23,9 @@ def create_model3d(db: Session, model3d: Model3DCreate):
         file_format=model3d.file_format,
         file_size=model3d.file_size,
         file_path=model3d.file_path,
+        s3_key=model3d.s3_key,
+        s3_url=model3d.s3_url,
     )
-    
-    # TODO: Aquí se implementará la lógica de almacenamiento en S3
-    # Por ahora, solo guardamos la información en la base de datos
     
     db.add(db_model3d)
     db.commit()
@@ -80,7 +79,10 @@ def delete_model3d(db: Session, model3d_id: int):
     if not db_model3d:
         raise HTTPException(status_code=404, detail="Modelo 3D no encontrado")
     
-    # TODO: Aquí se implementaría la lógica de eliminación del archivo en S3
+    # Eliminar el archivo de S3 si existe
+    if db_model3d.s3_key:
+        from model3d.services.s3_service import delete_file_from_s3
+        delete_file_from_s3(db_model3d.s3_key)
     
     db.delete(db_model3d)
     db.commit()

@@ -3,10 +3,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "dosis", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
 
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   font-family: 'Inter', sans-serif;

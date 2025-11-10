@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from auth.services.auth_service import get_current_active_user
 from core.database import get_db
 from order.schemas.order import OrderCreate, OrderSchema, OrderUpdate
+from order.schemas.medical_order import MedicalOrderCreate, MedicalOrderSchema
 from order.services.order_service import (
     create_order,
     get_order,
@@ -11,13 +12,14 @@ from order.services.order_service import (
     get_all_orders,
     update_order,
     delete_order,
+    create_medical_order,
 )
 from user.models.user import User
 
 order_router = APIRouter(prefix="/orders", tags=["Orders"])
 
 
-@order_router.post("/", response_model=OrderSchema)
+@order_router.post("/create", response_model=OrderSchema)
 def create_new_order(
     order: OrderCreate,
     current_user: User = Depends(get_current_active_user),
@@ -28,6 +30,19 @@ def create_new_order(
     El usuario autenticado será el propietario de la orden.
     """
     return create_order(db, current_user.id, order)
+
+
+@order_router.post("/create-medical", response_model=MedicalOrderSchema)
+def create_new_medical_order(
+    medical_order: MedicalOrderCreate,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Crea una nueva orden médica.
+    El usuario autenticado será el propietario de la orden médica.
+    """
+    return create_medical_order(db, current_user.id, medical_order)
 
 
 # @order_router.get("/", response_model=list[OrderSchema])
@@ -127,7 +142,7 @@ def update_order_detail(
             raise HTTPException(
                 status_code=403, detail="No puedes asignar un técnico a tu propia orden"
             )
-        # Puede actualizar otros campos como specification, meeting_date, etc.
+        # Puede actualizar otros campos como specification, delivery_date, etc.
 
     return update_order(db, order_id, order_update)
 

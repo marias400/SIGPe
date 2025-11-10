@@ -1,74 +1,188 @@
-// src/components/Navbar.jsx
-import React from "react";
-import { Link } from "react-router-dom";
-import "../styles/Navbar.css";
-import campanitaIcon from "../assets/campanita.png";
+import { useContext, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext.jsx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import '../styles/Navbar.css'
+/* import all the icons in Free Solid, Free Regular, and Brands styles */
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import logo from "../public/assets/LogoSIGPe.png";
+library.add(fas, far, fab)
+
+const API_URL = "http://localhost:8000/api";
 
 export default function Navbar() {
+  const { logout, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
+  const [notificacionsAmount, setNotificacionsAmount] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [notificationsDropdownOpen, setNotificationsDropdownOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  useEffect(() => {
+    const getNotifications = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${API_URL}/notifications/my-notifications`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          const userNotifications = await response.json();
+          // Sort by created_at descending (newest first) and limit to 5
+          const sorted = userNotifications.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+          setNotifications(sorted.slice(0, 5));
+          // Count only unread notifications
+          const unreadCount = userNotifications.filter(n => !n.is_read).length;
+          setNotificacionsAmount(unreadCount);
+        }
+      } catch (error) {
+        console.error("Error al obtener notificaciones:", error);
+      }
+    };
+
+    if (user) {
+      getNotifications();
+    }
+  }, [user]);
+
+  const toggleMenu = () => setMenuOpen(prev => !prev);
+
+  const toggleNotificationsDropdown = () => {
+    setNotificationsDropdownOpen(prev => !prev);
+  };
+
+  const handleNotificationClick = (notification) => {
+    setNotificationsDropdownOpen(false);
+    navigate('/user-details', { state: { activeSection: 'notifications' } });
+  };
+
+  const handleUserDetailsClick = () => {
+    navigate('/user-details');
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (notificationsDropdownOpen && !event.target.closest('.notifications-dropdown-container')) {
+        setNotificationsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [notificationsDropdownOpen]);
+
   return (
     <header className="navbar">
       {/* === IZQUIERDA: LOGO Y NOMBRE === */}
-      <div className="navbar-brand">
+      <div className="navbar-left">
         <div className="navbar-logo">
-          <svg
-            fill="white"
-            viewBox="0 0 48 48"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clipPath="url(#clip0_6_319)">
-              <path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" />
-            </g>
-            <defs>
-              <clipPath id="clip0_6_319">
-                <rect width="48" height="48" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
+          <Link to="/"><img src={logo} alt="SIGPe Logo" /> {/* feature: modificar para que use un svg */}</Link>
         </div>
-        <h2>SIGPe</h2>
       </div>
 
-      {/* === CENTRO: LINKS DE NAVEGACIÓN (solo desktop) === */}
+      {/* === CENTRO / DERECHO: LINKS DE NAVEGACIÓN y acciones === */}
       <nav className="navbar-links">
-        <div className="links">
-          <Link to="/">Inicio</Link>
-          <Link to="/quienes-somos">Quiénes Somos</Link>
-          <Link to="/materiales">Materiales</Link>
-          <Link to="/dashboard">Dashboard</Link>
+        <div className="navbar-actions">
+          <button className="cta-button cotizar-button">
+            <Link to="/cotizacion">Cotizar</Link>
+          </button>
+
+          <div className="burguer-menu" onClick={toggleMenu} aria-label="Abrir menú">
+            <FontAwesomeIcon icon="fa-solid fa-bars" />
+          </div>
         </div>
-        <button className="cta-button">Cotizar</button>
+
+        <ul className={`nav-links-list ${menuOpen ? 'open' : ''}`}>
+          <Link to="/login" className="btn-in-burguer">Iniciar Sesión</Link>
+          <Link to="/" onClick={() => setMenuOpen(false)}>Inicio</Link>
+          <Link to="/about-us" onClick={() => setMenuOpen(false)}>Quiénes Somos</Link>
+          {user && <Link to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>} {/* feature: modificar para que solo los técnicos puedan verlo */}
+        </ul>
       </nav>
 
       {/* === DERECHA: NOTIFICACIONES Y USUARIO === */}
       <div className="navbar-user">
-        <button className="notif-button" title="Notificaciones">
-          <img
-            src={campanitaIcon}
-            alt="Notificaciones"
-            className="notif-icon"
-          />
-          <span className="notification-badge">3</span>
-        </button>
-
-        <div className="user-info">
-          <div
-            className="user-avatar"
-            style={{
-              backgroundImage:
-                'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdZMKvuUhyTcHg05zn-WThFjEKPY_Ss4V3b25IVUARSEtYCDpyv52EaQhXAaM0jnsYQOisHCkVhBQjUABNMDhwnWd-4Cga0m9xdiCHTPlznkw1o9P8neQBkCc3BXLOPSIlBtB4Fx39RN-UN6MM8FDoYFOJlVHwtKg4XN6yKNfwyaJd00tdpekzABlwCPdapp_rNugjoJXzyTZVXUiZOZYKVcfwbHFI5H3krznlYYXQbpAWXN4E-Xep8o4StIJkWIU5ifbHdG8I0to")',
-            }}
-          />
-          <div className="user-details">
-            <p className="user-name">Dr. Elena Vasquez</p>
-            <p className="user-role">Admin</p>
+        {user ? (
+          <>
+            <div className="notifications-dropdown-container">
+              <button
+                className="notif-button"
+                title="Notificaciones"
+                onClick={toggleNotificationsDropdown}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-bell" />
+                {notificacionsAmount > 0 && (
+                  <span className="notification-badge">{notificacionsAmount}</span>
+                )}
+              </button>
+              {notificationsDropdownOpen && (
+                <div className="notifications-dropdown">
+                  <div className="notifications-dropdown-header">
+                    <h3>Notificaciones</h3>
+                    <button
+                      className="view-all-link"
+                      onClick={() => {
+                        setNotificationsDropdownOpen(false);
+                        navigate('/user-details', { state: { activeSection: 'notifications' } });
+                      }}
+                    >
+                      Ver todas
+                    </button>
+                  </div>
+                  <div className="notifications-dropdown-list">
+                    {notifications.length > 0 ? (
+                      notifications.map((notification) => (
+                        <div
+                          key={notification.id}
+                          className={`notification-dropdown-item ${!notification.is_read ? 'unread' : ''}`}
+                          onClick={() => handleNotificationClick(notification)}
+                        >
+                          <div className="notification-dropdown-header-item">
+                            <span className="notification-dropdown-type">{notification.type || "Aviso"}</span>
+                            {!notification.is_read && <span className="unread-dot-small"></span>}
+                          </div>
+                          <p className="notification-dropdown-message">
+                            {notification.message || "Sin mensaje"}
+                          </p>
+                          <p className="notification-dropdown-date">
+                            {new Date(notification.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="no-notifications">
+                        <p>No hay notificaciones</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="user-info">
+              <div className="user-details" onClick={handleUserDetailsClick} style={{ cursor: 'pointer' }}>
+                <p className="user-name">{user.name}</p>
+              </div>
+              <button onClick={handleLogout} className="cta-button">Cerrar Sesión</button>
+            </div>
+          </>
+        ) : (
+          <div className="auth-links">
+            <Link to="/login" className="cta-button btn-in-navbar">Iniciar Sesión</Link>
           </div>
-        </div>
+        )}
       </div>
-
-      {/* === BOTÓN MENÚ (mobile) === */}
-      <button className="menu-button">
-        <span className="material-symbols-outlined">menu</span>
-      </button>
     </header>
   );
 }
