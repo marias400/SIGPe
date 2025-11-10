@@ -72,7 +72,9 @@ export default function OrderForm() {
         console.error("Error al verificar el tipo de usuario:", error);
       }
     };
-    getIsDoctor();
+    if (user) {
+      getIsDoctor();
+    }
   }, []);
 
   // Cargar catálogo completo (specialities con prostheses, materials, sizes)
@@ -328,6 +330,52 @@ export default function OrderForm() {
     }
     return selectedProsthesis.materials;
   };
+
+  // Calcular precio aproximado usando la misma lógica que el stored procedure
+  const calculateApproximatePrice = () => {
+    // Si no hay prótesis seleccionada, no se puede calcular
+    if (!selectedProsthesis || !selectedProsthesis.base_price) {
+      return null;
+    }
+
+    const basePrice = selectedProsthesis.base_price;
+    let sizeModifier = 0;
+    let materialModifier = 0;
+
+    // Obtener modificador de tamaño si hay uno seleccionado
+    if (selectedSize) {
+      const selectedSizeObj = getSizesForProsthesis().find(
+        (size) => size.id.toString() === selectedSize.toString()
+      );
+      if (selectedSizeObj && selectedSizeObj.price_modifier !== null && selectedSizeObj.price_modifier !== undefined) {
+        sizeModifier = selectedSizeObj.price_modifier;
+      }
+    }
+
+    // Obtener modificador de material si hay uno seleccionado
+    if (selectedMaterial) {
+      const selectedMaterialObj = getMaterialsForProsthesis().find(
+        (material) => material.id.toString() === selectedMaterial.toString()
+      );
+      if (selectedMaterialObj && selectedMaterialObj.price_modifier !== null && selectedMaterialObj.price_modifier !== undefined) {
+        materialModifier = selectedMaterialObj.price_modifier;
+      }
+    }
+
+    // Calcular precio total usando la misma fórmula que el stored procedure
+    // precio_total = precio_base + (precio_base * modificador_tamaño) + (precio_base * modificador_material)
+    const fullPrice = basePrice + (basePrice * sizeModifier) + (basePrice * materialModifier);
+
+    return {
+      basePrice,
+      sizeModifier,
+      materialModifier,
+      fullPrice: Math.round(fullPrice * 100) / 100, // Redondear a 2 decimales
+    };
+  };
+
+  // Obtener el precio calculado
+  const priceCalculation = calculateApproximatePrice();
 
   // Verificar si se completaron todos los campos básicos
   const isBasicFormComplete = () => {
@@ -791,8 +839,40 @@ export default function OrderForm() {
               </div>
             )}
 
+            {/* Resumen de Precio Aproximado */}
+            {priceCalculation && selectedProsthesis && selectedSize && selectedMaterial && (
+              <div className="seccion-cotizacion">
+                <div className="price-summary">
+                  <h3>Resumen de Precio Aproximado</h3>
+                  <div className="price-breakdown">
+                    <div className="price-row">
+                      <span className="price-label">Precio Base:</span>
+                      <span className="price-value">${priceCalculation.basePrice.toLocaleString('es-AR')}</span>
+                    </div>
+                    {priceCalculation.sizeModifier > 0 && (
+                      <div className="price-row">
+                        <span className="price-label">Modificador de Tamaño ({priceCalculation.sizeModifier * 100}%):</span>
+                        <span className="price-value">+${(priceCalculation.basePrice * priceCalculation.sizeModifier).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+                    )}
+                    {priceCalculation.materialModifier > 0 && (
+                      <div className="price-row">
+                        <span className="price-label">Modificador de Material ({priceCalculation.materialModifier * 100}%):</span>
+                        <span className="price-value">+${(priceCalculation.basePrice * priceCalculation.materialModifier).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+                    )}
+                    <div className="price-row price-total">
+                      <span className="price-label">Precio Total Aproximado:</span>
+                      <span className="price-value">${priceCalculation.fullPrice.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    </div>
+                  </div>
+                  <p className="price-note">* Este es un precio aproximado. El precio final puede variar según especificaciones adicionales.</p>
+                </div>
+              </div>
+            )}
+
             {/* Botón de envío - solo mostrar si se completaron los campos básicos y hay usuario logueado */}
-            {isBasicFormComplete() && (!isDoctor || (isDoctor && medicalOrderData.patient_id && medicalOrderData.urgency_level && medicalOrderData.pathology)) && (
+            {(!isDoctor || (isDoctor && medicalOrderData.patient_id && medicalOrderData.urgency_level && medicalOrderData.pathology)) && (
               <div className="seccion-cotizacion">
                 {user ? (
                   <button
@@ -800,13 +880,14 @@ export default function OrderForm() {
                     className="btn btn-cotizar"
                     disabled={submitting}
                   >
-                    {submitting ? "Creando orden..." : "Crear Orden"}
+                    {submitting ? isBasicFormComplete() ? "Creando orden..." : "Completar formulario" : "Crear Orden"}
                   </button>
                 ) : (
                   <button
                     type="button"
                     className="btn btn-cotizar"
                     onClick={() => navigate("/login")}
+
                   >
                     Iniciar Sesión para Crear Orden
                   </button>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext.jsx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { useNotifications } from "../hooks/useNotifications";
 import '../styles/Navbar.css'
 /* import all the icons in Free Solid, Free Regular, and Brands styles */
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -11,13 +12,10 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import logo from "../public/assets/LogoSIGPe.png";
 library.add(fas, far, fab)
 
-const API_URL = "http://localhost:8000/api";
-
 export default function Navbar() {
   const { logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [notifications, setNotifications] = useState([]);
-  const [notificacionsAmount, setNotificacionsAmount] = useState(0);
+  const { notificationsAmount, getNotifications, unreadNotifications } = useNotifications(user);
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsDropdownOpen, setNotificationsDropdownOpen] = useState(false);
 
@@ -26,37 +24,10 @@ export default function Navbar() {
     navigate('/');
   };
 
-  useEffect(() => {
-    const getNotifications = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${API_URL}/notifications/my-notifications`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (response.ok) {
-          const userNotifications = await response.json();
-          // Sort by created_at descending (newest first) and limit to 5
-          const sorted = userNotifications.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-          setNotifications(sorted.slice(0, 5));
-          // Count only unread notifications
-          const unreadCount = userNotifications.filter(n => !n.is_read).length;
-          setNotificacionsAmount(unreadCount);
-        }
-      } catch (error) {
-        console.error("Error al obtener notificaciones:", error);
-      }
-    };
-
-    if (user) {
-      getNotifications();
-    }
-  }, [user]);
-
   const toggleMenu = () => setMenuOpen(prev => !prev);
 
   const toggleNotificationsDropdown = () => {
+    getNotifications();
     setNotificationsDropdownOpen(prev => !prev);
   };
 
@@ -108,7 +79,7 @@ export default function Navbar() {
           <Link to="/login" className="btn-in-burguer">Iniciar Sesión</Link>
           <Link to="/" onClick={() => setMenuOpen(false)}>Inicio</Link>
           <Link to="/about-us" onClick={() => setMenuOpen(false)}>Quiénes Somos</Link>
-          {user && <Link to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>} {/* feature: modificar para que solo los técnicos puedan verlo */}
+          {user && (user.user_type === 'tecnico') && <Link to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>} {/* feature: modificar para que solo los técnicos puedan verlo */}
         </ul>
       </nav>
 
@@ -123,8 +94,8 @@ export default function Navbar() {
                 onClick={toggleNotificationsDropdown}
               >
                 <FontAwesomeIcon icon="fa-solid fa-bell" />
-                {notificacionsAmount > 0 && (
-                  <span className="notification-badge">{notificacionsAmount}</span>
+                {notificationsAmount > 0 && (
+                  <span className="notification-badge">{notificationsAmount}</span>
                 )}
               </button>
               {notificationsDropdownOpen && (
@@ -142,8 +113,8 @@ export default function Navbar() {
                     </button>
                   </div>
                   <div className="notifications-dropdown-list">
-                    {notifications.length > 0 ? (
-                      notifications.map((notification) => (
+                    {notificationsAmount > 0 ? (
+                      unreadNotifications.map((notification) => (
                         <div
                           key={notification.id}
                           className={`notification-dropdown-item ${!notification.is_read ? 'unread' : ''}`}

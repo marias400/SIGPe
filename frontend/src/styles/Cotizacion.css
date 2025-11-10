@@ -868,3 +868,128 @@ textarea.select-custom {
     opacity: 1;
   }
 }
+
+/* Resumen de Precio Aproximado */
+.price-summary {
+  width: 100%;
+  max-width: 600px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px solid var(--color-primary-light);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease-out;
+}
+
+.price-summary h3 {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid var(--color-primary-light);
+  padding-bottom: 0.75rem;
+}
+
+.price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.price-row:hover {
+  background-color: #f8f9fa;
+  border-color: var(--color-primary-light);
+  transform: translateX(4px);
+}
+
+.price-row.price-total {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: none;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.price-row.price-total:hover {
+  transform: translateX(0);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.price-label {
+  font-size: 1rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.price-row.price-total .price-label {
+  color: white;
+}
+
+.price-value {
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.price-row.price-total .price-value {
+  color: white;
+  font-size: 1.3rem;
+}
+
+.price-note {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-style: italic;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .price-summary {
+    padding: 1.5rem;
+  }
+
+  .price-summary h3 {
+    font-size: 1.3rem;
+  }
+
+  .price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .price-value {
+    align-self: flex-end;
+    font-size: 1rem;
+  }
+
+  .price-row.price-total {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .price-row.price-total .price-value {
+    font-size: 1.2rem;
+  }
+}

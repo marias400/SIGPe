@@ -223,6 +223,19 @@
   background: #f9fafb;
 }
 
+.orders-table tbody tr.clickable-row {
+  transition: background-color 0.2s;
+}
+
+.orders-table tbody tr.clickable-row:hover {
+  background: #e5e7eb;
+}
+
+.orders-table tbody tr.selected-row {
+  background: #dbeafe;
+  border-left: 3px solid #54abe0;
+}
+
 .status-badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
@@ -277,5 +290,118 @@
 .pagination-info {
   font-size: 0.875rem;
   color: #6b7280;
+}
+
+/* Technician Assignment Styles */
+.technician-assignment {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.technician-label {
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.technician-assignment-controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.technician-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.technician-select:focus {
+  outline: none;
+  border-color: #54abe0;
+  box-shadow: 0 0 0 3px rgba(84, 171, 224, 0.1);
+}
+
+.technician-select:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-accept-technician {
+  padding: 0.75rem 1.5rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-accept-technician:hover:not(:disabled) {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-accept-technician:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+}
+
+.assigning-indicator {
+  font-size: 0.875rem;
+  color: #54abe0;
+  font-style: italic;
+  margin-top: 0.25rem;
+}
+
+.btn-close-order {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.btn-close-order:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-close-order i {
+  font-size: 1rem;
 }
 

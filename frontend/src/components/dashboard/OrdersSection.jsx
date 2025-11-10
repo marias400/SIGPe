@@ -13,6 +13,10 @@ const OrdersSection = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [orderSearchTerm, setOrderSearchTerm] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [technicians, setTechnicians] = useState([]);
+  const [loadingTechnicians, setLoadingTechnicians] = useState(false);
+  const [assigningTechnician, setAssigningTechnician] = useState(false);
+  const [selectedTechnicianId, setSelectedTechnicianId] = useState(null);
   const [filters, setFilters] = useState({
     status: null,
     urgency: null,
@@ -30,6 +34,15 @@ const OrdersSection = () => {
     applyFilters();
   }, [orders, searchTerm, filters]);
 
+  // Cargar técnicos cuando se selecciona una orden
+  useEffect(() => {
+    if (selectedOrder) {
+      loadTechnicians();
+      // Inicializar el técnico seleccionado con el técnico actual de la orden
+      setSelectedTechnicianId(selectedOrder.technician_id || null);
+    }
+  }, [selectedOrder]);
+
   const loadOrders = async () => {
     try {
       setLoading(true);
@@ -43,6 +56,84 @@ const OrdersSection = () => {
       console.error("Error loading orders:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadTechnicians = async () => {
+    try {
+      setLoadingTechnicians(true);
+      const res = await authFetch("/users/all");
+      if (res.ok) {
+        const data = await res.json();
+        // Filtrar solo los técnicos
+        const techs = data.filter(user => user.user_type === "tecnico");
+        setTechnicians(techs);
+      }
+    } catch (error) {
+      console.error("Error loading technicians:", error);
+    } finally {
+      setLoadingTechnicians(false);
+    }
+  };
+
+  const handleRowClick = async (order) => {
+    // Cargar los detalles completos de la orden
+    try {
+      const res = await authFetch(`/orders/${order.id}`);
+      if (res.ok) {
+        const orderData = await res.json();
+        setSelectedOrder(orderData);
+      } else {
+        // Si falla, usar la orden de la lista
+        setSelectedOrder(order);
+      }
+    } catch (error) {
+      console.error("Error loading order details:", error);
+      // Si falla, usar la orden de la lista
+      setSelectedOrder(order);
+    }
+  };
+
+  const handleAssignTechnician = async () => {
+    if (!selectedOrder || !selectedTechnicianId) {
+      alert("Por favor seleccione un técnico");
+      return;
+    }
+
+    try {
+      setAssigningTechnician(true);
+      const res = await authFetch(`/orders/${selectedOrder.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          technician_id: parseInt(selectedTechnicianId),
+        }),
+      });
+
+      if (res.ok) {
+        const updatedOrder = await res.json();
+        setSelectedOrder(updatedOrder);
+        // Actualizar también en la lista
+        const updatedOrders = orders.map(order => 
+          order.id === updatedOrder.id ? updatedOrder : order
+        );
+        setOrders(updatedOrders);
+        // Actualizar también en la lista filtrada
+        setFilteredOrders(filteredOrders.map(order => 
+          order.id === updatedOrder.id ? updatedOrder : order
+        ));
+        alert("Técnico asignado exitosamente");
+      } else {
+        const errorData = await res.json();
+        alert(`Error al asignar técnico: ${errorData.detail || "Error desconocido"}`);
+      }
+    } catch (error) {
+      console.error("Error assigning technician:", error);
+      alert("Error al asignar técnico");
+    } finally {
+      setAssigningTechnician(false);
     }
   };
 
@@ -210,8 +301,56 @@ const OrdersSection = () => {
               <p><strong>Fecha Entrega:</strong> {new Date(selectedOrder.delivery_date).toLocaleDateString()}</p>
             )}
             <p><strong>Especificación:</strong> {selectedOrder.specification || "N/A"}</p>
+            <p><strong>Técnico Asignado:</strong> {
+              selectedOrder.technician_id 
+                ? (() => {
+                    const tech = technicians.find(t => t.id === selectedOrder.technician_id);
+                    return tech ? `${tech.name} ${tech.lastname}` : "Cargando...";
+                  })()
+                : "Sin asignar"
+            }</p>
           </div>
-          <button className="btn-close" onClick={() => setSelectedOrder(null)}>Cerrar</button>
+          
+          {/* Dropdown para asignar técnico */}
+          <div className="technician-assignment">
+            <label htmlFor="technician-select" className="technician-label">
+              <strong>Asignar Técnico:</strong>
+            </label>
+            <div className="technician-assignment-controls">
+              <select
+                id="technician-select"
+                className="technician-select"
+                value={selectedTechnicianId || ""}
+                onChange={(e) => setSelectedTechnicianId(e.target.value ? parseInt(e.target.value) : null)}
+                disabled={assigningTechnician || loadingTechnicians}
+              >
+                <option value="">Seleccione un técnico</option>
+                {loadingTechnicians ? (
+                  <option disabled>Cargando técnicos...</option>
+                ) : (
+                  technicians.map((technician) => (
+                    <option key={technician.id} value={technician.id}>
+                      {technician.name} {technician.lastname} ({technician.email})
+                    </option>
+                  ))
+                )}
+              </select>
+              <button
+                className="btn-accept-technician"
+                onClick={handleAssignTechnician}
+                disabled={assigningTechnician || loadingTechnicians || !selectedTechnicianId || selectedTechnicianId === selectedOrder.technician_id}
+              >
+                {assigningTechnician ? "Asignando..." : "Aceptar"}
+              </button>
+            </div>
+            {assigningTechnician && (
+              <span className="assigning-indicator">Asignando técnico...</span>
+            )}
+          </div>
+
+          <button className="btn-close-order" onClick={() => setSelectedOrder(null)}>
+            <i className="fas fa-times"></i> Cerrar Pedido Seleccionado
+          </button>
         </div>
       )}
 
@@ -293,12 +432,18 @@ const OrdersSection = () => {
                   <th>Email</th>
                   <th>Estado</th>
                   <th>Etapa</th>
+                  <th>Precio</th>
                   <th>Fecha Creación</th>
                 </tr>
               </thead>
               <tbody>
                 {paginatedOrders.map((order) => (
-                  <tr key={order.id}>
+                  <tr 
+                    key={order.id}
+                    onClick={() => handleRowClick(order)}
+                    className={selectedOrder?.id === order.id ? "selected-row" : "clickable-row"}
+                    style={{ cursor: "pointer" }}
+                  >
                     <td>{order.id}</td>
                     <td>{order.user?.name} {order.user?.lastname}</td>
                     <td>{order.user?.email}</td>
@@ -308,6 +453,7 @@ const OrdersSection = () => {
                       </span>
                     </td>
                     <td>{order.current_stage || "N/A"}</td>
+                    <td>{order.full_price ? `$${order.full_price.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "N/A"}</td>
                     <td>{new Date(order.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}

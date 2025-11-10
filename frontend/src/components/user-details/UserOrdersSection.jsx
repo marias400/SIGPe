@@ -280,6 +280,7 @@ const UserOrdersSection = () => {
                   <th>ID</th>
                   <th>Estado</th>
                   <th>Etapa</th>
+                  <th>Precio</th>
                   <th>Fecha Creación</th>
                 </tr>
               </thead>
@@ -293,6 +294,7 @@ const UserOrdersSection = () => {
                       </span>
                     </td>
                     <td>{order.current_stage || "N/A"}</td>
+                    <td>{order.full_price ? `$${order.full_price.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "N/A"}</td>
                     <td>{new Date(order.created_at).toLocaleDateString()}</td>
                   </tr>
                 ))}
