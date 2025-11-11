@@ -9,7 +9,7 @@ export default function RegisterForm({ onSubmit }) {
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
+
   // Estados para errores de validación
   const [errors, setErrors] = useState({
     email: "",
@@ -95,7 +95,7 @@ export default function RegisterForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Validar todos los campos antes de enviar
     const emailValid = validateField("email", mail);
     const passwordValid = validateField("password", password);
@@ -106,7 +106,8 @@ export default function RegisterForm({ onSubmit }) {
       const name = e.target.name.value;
       const lastname = e.target.lastname.value;
       const password = e.target.password.value;
-      onSubmit({ email, name, lastname, password });
+      const user_type = "se_reemplaza_en_backend"; // Este campo se maneja en el backend
+      onSubmit({ email, name, lastname, password, user_type });
     }
   };
 

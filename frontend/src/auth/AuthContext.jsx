@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Register: crea un nuevo usuario
-  const register = async (name, lastname, email, password) => {
+  const register = async (name, lastname, email, password, user_type) => {
     const res = await fetch(`${API_URL}/users`, {
       method: "POST",
       headers: {
@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }) => {
         lastname,
         email,
         password,
+        user_type,
       }),
     });
 

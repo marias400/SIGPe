@@ -23,9 +23,9 @@ export default function Login() {
     }
   };
 
-  const handleRegister = async ({ name, lastname, email, password }) => {
+  const handleRegister = async ({ name, lastname, email, password, user_type }) => {
     if (typeof register === "function") {
-      const result = await register(name, lastname, email, password);
+      const result = await register(name, lastname, email, password, user_type);
       if (result && result.email) {
         // Mostrar modal de éxito en vez de navegar directamente
         setMessage({ type: "success", text: "Usuario creado correctamente ✅" });
