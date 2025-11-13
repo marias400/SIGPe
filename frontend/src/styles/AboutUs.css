@@ -1,10 +1,16 @@
 /* src/components/QuienesSomos.css */
 
+body {
+  background-color: #F0F2F5;
+}
+
 .main-container {
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  max-width: 1440px;
+  max-width: 2000px;
   margin: 0 auto;
 }
 
@@ -14,12 +20,13 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: 360px;
-  padding: 1rem;
+  min-height: 480px;
+  padding: 2rem;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: white;
+  margin: 0;
 }
 
 .hero-section h1 {
@@ -40,7 +47,7 @@
 
 .hero-section button {
   background-color: #3b82f6;
-  /* brand-accent */
+
   color: white;
   padding: 0.5rem 1.25rem;
   border-radius: 0.5rem;
@@ -54,12 +61,19 @@
   background-color: #2563eb;
 }
 
-/* Misión, Visión y Valores */
+
+.main-container section:first-of-type {
+  margin-top: 40px;
+}
+
 .mv-values {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   text-align: center;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 2rem;
 }
 
@@ -75,10 +89,18 @@
 }
 
 .mv-card {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  border: 1px solid #e5e7eb;
+  background-color: #24558F;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.3s;
 }
 
 .mv-icon {
@@ -86,17 +108,44 @@
   height: 48px;
   margin: 0 auto 1.5rem;
   color: #3b82f6;
+
 }
+
 
 .mv-card h3 {
   font-weight: bold;
   font-size: 1.125rem;
   margin-bottom: 1rem;
+  color: #ffffff;
+  justify-content: center;
+  transition: transform 0.3s;
+ 
+
 }
 
 .mv-card p {
   font-size: 0.875rem;
   color: #6b7280;
+  justify-content: center;
+  transition: transform 0.3s;
+
+}
+
+.mv-card h3,
+.mv-card h4 {
+  color: #000000; 
+  opacity: 1; 
+}
+
+.mv-card p,
+.mv-card .role {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.mv-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* Timeline */
@@ -123,28 +172,41 @@
 }
 
 .timeline-item h4 {
-  font-size: 0.875rem;
-  font-weight: bold;
+  grid-column: 2;
+  grid-row: 1;
   color: #3b82f6;
+  margin: 0;
 }
 
 .timeline-item p {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin-top: 0.25rem;
+  grid-column: 2;
+  grid-row: 2;
+  margin: 5px 0 0 0;
 }
 
 /* Equipo */
 .team-section {
-  background-color: white;
+  
   padding: 3rem 1.5rem;
   border-radius: 1rem;
 }
 
 .team-grid {
-  display: flex;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  display: flex;            
+  justify-content: center;  
+  flex-wrap: wrap;          
+  gap: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  
+ 
+}
+
+.mv-card.team-member-card {
+  
+  flex-basis: 45%;
+  max-width: 500px;
+  min-width: 300px; 
 }
 
 @media(min-width: 640px) {
@@ -161,6 +223,14 @@
 
 .team-member {
   text-align: center;
+}
+
+.team-member-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
 
 .team-member img {
@@ -183,15 +253,15 @@
 }
 
 .team-member .role {
-  color: #3b82f6;
+  color: #1e293b;
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 /* Nuestra Tecnología */
 .technology-section {
-  background-color: #f9fafb;
-  /* Fondo claro para contrastar, similar al de la imagen */
+  
+
   padding: 3rem 1.5rem;
   border-radius: 1rem;
   text-align: center;
@@ -199,9 +269,10 @@
 
 .tech-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  max-width: 1000px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
   margin: 0 auto;
 }
 
@@ -220,9 +291,7 @@
 }
 
 .tech-icon {
-  /* Color del icono (similar al azul de la marca) */
   color: #06b6d4;
-  /* Usé un tono cian para diferenciarlo un poco de los otros íconos, puedes ajustarlo a #3b82f6 si prefieres */
   margin-bottom: 1rem;
 }
 
@@ -237,7 +306,7 @@
   color: #6b7280;
 }
 
-/* Impacto en la Salud / Caso de Éxito */
+
 
 .impact-section {
   padding: 3rem 1.5rem;
@@ -251,30 +320,30 @@
 .case-study-card {
   display: flex;
   flex-direction: column;
-  /* Apilado en móviles */
+
   background-color: white;
   border-radius: 1rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  /* Sombra suave */
+
   max-width: 1000px;
   margin: 0 auto;
   overflow: hidden;
-  /* Para que la imagen respete el radio */
+
 }
 
 @media (min-width: 768px) {
   .case-study-card {
     flex-direction: row;
-    /* Lado a lado en escritorio */
+
     text-align: left;
   }
 }
 
 .case-image-container {
   flex: 1;
-  /* Ocupa la mitad del espacio en escritorio */
+
   background-color: #06b6d4;
-  /* Color de fondo de la imagen, si la imagen no llena el contenedor */
+
   min-height: 250px;
   display: flex;
   align-items: center;
@@ -296,7 +365,7 @@
 
 .case-content {
   flex: 1;
-  /* Ocupa la otra mitad del espacio en escritorio */
+
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -307,7 +376,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: #06b6d4;
-  /* Color de acento */
+
   margin-bottom: 1rem;
 }
 
@@ -328,6 +397,6 @@
 @media (max-width: 767px) {
   .case-content {
     text-align: center;
-    /* Centrar contenido en móviles */
+
   }
 }
