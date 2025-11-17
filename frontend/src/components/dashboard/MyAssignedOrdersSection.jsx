@@ -7,16 +7,26 @@ const API_URL = "http://localhost:8000/api";
 const MyAssignedOrdersSection = () => {
   const { authFetch, user } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingOrder, setEditingOrder] = useState(null);
   const [patients, setPatients] = useState([]);
   const [models3d, setModels3d] = useState({}); // { orderId: [models] }
   const [expandedOrder, setExpandedOrder] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [statusFilter, setStatusFilter] = useState(null); // 'completed', 'in_progress', 'pending'
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [oldCurrentStage, setOldCurrentStage] = useState(null);
+  const itemsPerPage = 3;
   const argentinaOffset = 3 * 60 * 60 * 1000; // UTC−3
 
   useEffect(() => {
     loadAssignedOrders();
   }, []);
+
+  useEffect(() => {
+    applyFilters();
+  }, [orders, statusFilter]);
 
   const loadAssignedOrders = async () => {
     try {
@@ -35,6 +45,7 @@ const MyAssignedOrdersSection = () => {
           return (b.medical_order?.priority_level || 0) - (a.medical_order?.priority_level || 0);
         });
         setOrders(assignedOrders);
+        setFilteredOrders(assignedOrders);
 
         // Cargar modelos 3D para órdenes con diseño
         assignedOrders.forEach(order => {
@@ -74,6 +85,32 @@ const MyAssignedOrdersSection = () => {
     }
   };
 
+  const applyFilters = () => {
+    let filtered = [...orders];
+
+    if (statusFilter) {
+      if (statusFilter === "completed") {
+        filtered = filtered.filter((order) => order.is_completed);
+      } else if (statusFilter === "in_progress") {
+        filtered = filtered.filter((order) => !order.is_completed && order.current_stage);
+      } else if (statusFilter === "pending") {
+        filtered = filtered.filter((order) => !order.is_completed && !order.current_stage);
+      }
+    }
+
+    setFilteredOrders(filtered);
+    setCurrentPage(1);
+  };
+
+  const getStatusCounts = () => {
+    return {
+      completed: orders.filter((order) => order.is_completed).length,
+      in_progress: orders.filter((order) => !order.is_completed && order.current_stage).length,
+      pending: orders.filter((order) => !order.is_completed && !order.current_stage).length,
+      total: orders.length,
+    };
+  };
+
   const handleEdit = async (order) => {
     // Cargar los detalles completos de la orden para asegurar que tenemos medical_order
     try {
@@ -81,12 +118,16 @@ const MyAssignedOrdersSection = () => {
       if (res.ok) {
         const orderData = await res.json();
         setEditingOrder(orderData);
+        setOldCurrentStage(orderData.current_stage);
+        setNotificationMessage("");
         if (orderData.is_medical) {
           loadPatients();
         }
       } else {
         // Si falla, usar la orden de la lista
         setEditingOrder({ ...order });
+        setOldCurrentStage(order.current_stage);
+        setNotificationMessage("");
         if (order.is_medical) {
           loadPatients();
         }
@@ -95,6 +136,8 @@ const MyAssignedOrdersSection = () => {
       console.error("Error loading order details:", error);
       // Si falla, usar la orden de la lista
       setEditingOrder({ ...order });
+      setOldCurrentStage(order.current_stage);
+      setNotificationMessage("");
       if (order.is_medical) {
         loadPatients();
       }
@@ -105,11 +148,15 @@ const MyAssignedOrdersSection = () => {
     if (!editingOrder) return;
 
     try {
+      // Verificar si cambió el current_stage
+      const currentStageChanged = oldCurrentStage !== editingOrder.current_stage;
+      
       // Preparar datos de actualización de la orden
       const updateData = {
         is_completed: editingOrder.is_completed,
         current_stage: editingOrder.current_stage || null,
         delivery_date: editingOrder.delivery_date || null,
+        notification_message: currentStageChanged && notificationMessage ? notificationMessage : null,
       };
 
       // Actualizar la orden
@@ -134,6 +181,8 @@ const MyAssignedOrdersSection = () => {
           order.id === updatedOrder.id ? { ...updatedOrder, medical_order: editingOrder.medical_order } : order
         ));
         setEditingOrder(null);
+        setNotificationMessage("");
+        setOldCurrentStage(null);
         alert("Pedido actualizado exitosamente");
         loadAssignedOrders(); // Recargar para obtener datos actualizados
       } else {
@@ -148,6 +197,8 @@ const MyAssignedOrdersSection = () => {
 
   const handleCancel = () => {
     setEditingOrder(null);
+    setNotificationMessage("");
+    setOldCurrentStage(null);
   };
 
   const toggleExpand = async (orderId) => {
@@ -175,6 +226,13 @@ const MyAssignedOrdersSection = () => {
     return "status-pending";
   };
 
+  // Calcular paginación
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedOrders = filteredOrders.slice(startIndex, endIndex);
+  const statusCounts = getStatusCounts();
+
   if (loading) {
     return <div className="my-assigned-orders-section">Cargando pedidos asignados...</div>;
   }
@@ -186,13 +244,44 @@ const MyAssignedOrdersSection = () => {
         Pedidos asignados a ti, ordenados por nivel de prioridad
       </p>
 
-      {orders.length === 0 ? (
+      {/* Filtros con contadores */}
+      <div className="filters-container">
+        <div className="filter-buttons">
+          <button
+            className={`filter-btn ${statusFilter === null ? "active" : ""}`}
+            onClick={() => setStatusFilter(null)}
+          >
+            Todos ({statusCounts.total})
+          </button>
+          <button
+            className={`filter-btn ${statusFilter === "completed" ? "active" : ""}`}
+            onClick={() => setStatusFilter("completed")}
+          >
+            Completados ({statusCounts.completed})
+          </button>
+          <button
+            className={`filter-btn ${statusFilter === "in_progress" ? "active" : ""}`}
+            onClick={() => setStatusFilter("in_progress")}
+          >
+            En Proceso ({statusCounts.in_progress})
+          </button>
+          <button
+            className={`filter-btn ${statusFilter === "pending" ? "active" : ""}`}
+            onClick={() => setStatusFilter("pending")}
+          >
+            Pendientes ({statusCounts.pending})
+          </button>
+        </div>
+      </div>
+
+      {filteredOrders.length === 0 ? (
         <div className="no-orders">
-          <p>No tienes pedidos asignados</p>
+          <p>No hay pedidos con el filtro seleccionado</p>
         </div>
       ) : (
-        <div className="assigned-orders-list">
-          {orders.map((order) => (
+        <>
+          <div className="assigned-orders-list">
+            {paginatedOrders.map((order) => (
             <div key={order.id} className="assigned-order-card">
               <div className="order-card-header">
                 <div className="order-header-info">
@@ -295,7 +384,31 @@ const MyAssignedOrdersSection = () => {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+
+          {/* Paginación */}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button
+                className="pagination-btn"
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+              >
+                Anterior
+              </button>
+              <span className="pagination-info">
+                Página {currentPage} de {totalPages}
+              </span>
+              <button
+                className="pagination-btn"
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+              >
+                Siguiente
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {/* Modal de Edición */}
@@ -332,10 +445,31 @@ const MyAssignedOrdersSection = () => {
                   <input
                     type="text"
                     value={editingOrder.current_stage || ""}
-                    onChange={(e) => setEditingOrder({ ...editingOrder, current_stage: e.target.value })}
+                    onChange={(e) => {
+                      const newStage = e.target.value;
+                      setEditingOrder({ ...editingOrder, current_stage: newStage });
+                      // Si cambió el current_stage, mostrar campo de mensaje
+                      if (oldCurrentStage !== newStage) {
+                        // El campo de mensaje ya está visible
+                      }
+                    }}
                     placeholder="Ej: En diseño, En impresión, etc."
                   />
                 </div>
+
+                {/* Campo de mensaje para notificación cuando cambia current_stage */}
+                {oldCurrentStage !== editingOrder.current_stage && editingOrder.current_stage && (
+                  <div className="form-group">
+                    <label>Mensaje de Notificación (opcional):</label>
+                    <textarea
+                      value={notificationMessage}
+                      onChange={(e) => setNotificationMessage(e.target.value)}
+                      placeholder="Mensaje que se enviará al usuario cuando cambie la etapa..."
+                      rows="3"
+                    />
+                    <small>Este mensaje se enviará como notificación al usuario cuando se guarde el cambio de etapa.</small>
+                  </div>
+                )}
 
                 <div className="form-group">
                   <label>Precio (solo lectura):</label>

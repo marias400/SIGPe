@@ -4,6 +4,7 @@ import OrdersSection from "../components/dashboard/OrdersSection";
 import MyAssignedOrdersSection from "../components/dashboard/MyAssignedOrdersSection";
 import UsersSection from "../components/dashboard/UsersSection";
 import ProsthesesSection from "../components/dashboard/ProsthesesSection";
+import ValidateDoctorsSection from "../components/dashboard/ValidateDoctorsSection";
 import NotificationsSection from "../components/dashboard/NotificationsSection";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -27,6 +28,8 @@ const Dashboard = () => {
         return <UsersSection />;
       case "prostheses":
         return <ProsthesesSection />;
+      case "validate-doctors":
+        return <ValidateDoctorsSection />;
       case "notifications":
         return <NotificationsSection />;
       default:

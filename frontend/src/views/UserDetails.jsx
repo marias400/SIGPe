@@ -4,6 +4,7 @@ import UserDetailsSidebar from "../components/UserDetailsSidebar";
 import UserOrdersSection from "../components/user-details/UserOrdersSection";
 import UserNotificationsSection from "../components/user-details/UserNotificationsSection";
 import EditUserData from "../components/user-details/EditUserData";
+import RequestRoleSection from "../components/user-details/RequestRoleSection";
 import "../styles/Dashboard.css";
 
 const UserDetails = () => {
@@ -25,6 +26,8 @@ const UserDetails = () => {
         return <UserNotificationsSection />;
       case "edit":
         return <EditUserData />;
+      case "request-role":
+        return <RequestRoleSection />;
       default:
         return <UserOrdersSection />;
     }

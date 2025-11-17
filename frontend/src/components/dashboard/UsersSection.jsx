@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import "../../styles/UsersSection.css";
-
-const API_URL = "http://localhost:8000/api";
 
 const UsersSection = () => {
   const { authFetch } = useContext(AuthContext);
@@ -201,7 +199,7 @@ const UsersSection = () => {
           placeholder="Buscar usuario por ID, nombre, email, tipo..."
           value={userSearchTermSpecific}
           onChange={(e) => setUserSearchTermSpecific(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && searchUser()}
+          onKeyDown={(e) => e.key === "Enter" && searchUser()}
         />
         <button className="btn-search" onClick={searchUser}>
           Buscar Usuario
@@ -254,7 +252,12 @@ const UsersSection = () => {
                 </thead>
                 <tbody>
                   {paginatedUsers.map((user) => (
-                    <tr key={user.id}>
+                    <tr
+                      key={user.id}
+                      onClick={() => handleRowClick(user)}
+                      className={selectedUser?.id === user.id ? "selected-row" : "clickable-row"}
+                      style={{ cursor: "pointer" }}
+                    >
                       <td>{user.id}</td>
                       <td>{user.name} {user.lastname}</td>
                       <td>{user.email}</td>
@@ -327,7 +330,12 @@ const UsersSection = () => {
                 </thead>
                 <tbody>
                   {paginatedDoctors.map((doctor) => (
-                    <tr key={doctor.user_id}>
+                    <tr
+                      key={doctor.user_id}
+                      onClick={() => handleRowClick(doctor.user)}
+                      className={selectedUser?.id === doctor.user_id ? "selected-row" : "clickable-row"}
+                      style={{ cursor: "pointer" }}
+                    >
                       <td>{doctor.user_id}</td>
                       <td>{doctor.user?.name} {doctor.user?.lastname}</td>
                       <td>{doctor.user?.email}</td>

@@ -19,6 +19,7 @@ from doctor.services.doctor_service import (
     get_all_pending_doctor_requests,
     update_doctor_info,
     get_all_doctors,
+    reject_doctor_request,
 )
 from user.models.user import User
 
@@ -38,7 +39,7 @@ def request_doctor(
     return request_doctor_status(db, current_user.id, doctor_request)
 
 
-@doctor_router.get("/pending", response_model=list[DoctorSchema])
+@doctor_router.get("/pending", response_model=list[DoctorWithUserSchema])
 def get_pending_requests(
     current_user: User = Depends(get_current_technician_user),
     db: Session = Depends(get_db),
@@ -70,6 +71,24 @@ def validate_doctor(
     elif doctor_update is None:
         doctor_update = DoctorUpdate()
     return validate_doctor_request(db, user_id, doctor_update)
+
+
+@doctor_router.delete("/{user_id}/reject")
+def reject_doctor(
+    user_id: int,
+    current_user: User = Depends(get_current_technician_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Rechaza una solicitud de doctor.
+    Elimina el registro de doctors y crea una notificación al usuario.
+    Solo usuarios de tipo 'tecnico' pueden rechazar solicitudes de doctor.
+    """
+    if current_user.user_type != "tecnico":
+        raise HTTPException(
+            status_code=403, detail="No tienes permiso para rechazar solicitudes de doctor"
+        )
+    return reject_doctor_request(db, user_id)
 
 
 @doctor_router.get("/me", response_model=DoctorSchema)

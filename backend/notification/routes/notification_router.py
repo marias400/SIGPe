@@ -77,16 +77,15 @@ def create_new_notification(
             detail="No tienes permiso para crear una notificación para otro usuario",
         )
 
-    db_order = get_order(db, notification.order_id)
-
-    # Verificar permisos: solo el dueño puede modificar la orden
-    if not db_order:
-        raise HTTPException(status_code=404, detail="Orden no encontrada")
-
-    if db_order.user_id != current_user.id:
-        raise HTTPException(
-            status_code=403, detail="No tienes permiso para modificar esta orden"
-        )
+    # Si hay order_id, verificar que la orden existe y pertenece al usuario
+    if notification.order_id:
+        db_order = get_order(db, notification.order_id)
+        if not db_order:
+            raise HTTPException(status_code=404, detail="Orden no encontrada")
+        if db_order.user_id != current_user.id:
+            raise HTTPException(
+                status_code=403, detail="No tienes permiso para modificar esta orden"
+            )
 
     return create_notification(db, notification)
 

@@ -1,2 +1,1 @@
-from .patient import PatientCreate, PatientUpdate, PatientSchema
-
+from .size import SizeSchema

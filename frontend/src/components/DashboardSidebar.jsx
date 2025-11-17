@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboardList, faUsers, faStethoscope, faBell, faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardList, faUsers, faStethoscope, faBell, faUserCheck, faUserMd } from '@fortawesome/free-solid-svg-icons';
 import "../styles/DashboardSidebar.css";
 
 const DashboardSidebar = ({ activeSection, setActiveSection }) => {
@@ -9,6 +9,7 @@ const DashboardSidebar = ({ activeSection, setActiveSection }) => {
     { id: 'my-assigned-orders', label: 'Mis Pedidos Asignados', icon: faUserCheck },
     { id: 'users', label: 'Usuarios', icon: faUsers },
     { id: 'prostheses', label: 'Prótesis', icon: faStethoscope },
+    { id: 'validate-doctors', label: 'Validar Médicos', icon: faUserMd },
     { id: 'notifications', label: 'Notificaciones', icon: faBell },
   ];
 

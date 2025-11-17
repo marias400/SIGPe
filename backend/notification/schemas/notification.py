@@ -18,7 +18,7 @@ class NotificationCreate(BaseModel):
     """Schema para crear una notificación"""
 
     user_id: int
-    order_id: int
+    order_id: Optional[int] = None
     message: Optional[str] = None
     type: Optional[str] = None
     current_stage: Optional[str] = None

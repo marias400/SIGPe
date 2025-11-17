@@ -90,6 +90,24 @@ export const AuthProvider = ({ children }) => {
     return me;
   };
 
+  //refresh user data
+  const refreshUserData = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const res = await fetch(`${API_URL}/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Token inválido o expirado");
+      const data = await res.json();
+      setUser(data);
+    } catch {
+      localStorage.removeItem("token");
+      setUser(null);
+    }
+  };
+
   // Logout
   const logout = () => {
     localStorage.removeItem("token");
@@ -123,7 +141,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, authFetch, register }}>
+    <AuthContext.Provider value={{ user, login, logout, authFetch, register, refreshUserData }}>
       {children}
     </AuthContext.Provider>
   );

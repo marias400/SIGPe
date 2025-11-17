@@ -1,9 +1,8 @@
-from .patient_service import (
-    create_patient,
-    get_patient,
-    get_patients_by_doctor_id,
-    get_all_patients,
-    update_patient,
-    delete_patient,
+from .prosthesis_service import (
+    create_prosthesis,
+    get_prosthesis,
+    get_prostheses_by_speciality,
+    get_all_prostheses,
+    update_prosthesis,
+    delete_prosthesis,
 )
-
