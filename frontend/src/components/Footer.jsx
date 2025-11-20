@@ -114,11 +114,6 @@ export default function Footer() {
               </a>
             </div>
             
-            <div className="legal-links">
-              <Link to="/privacy">Política de Privacidad</Link>
-              <Link to="/terms">Términos de Servicio</Link>
-              <Link to="/cookies">Cookies</Link>
-            </div>
           </div>
         </div>
 
@@ -130,6 +125,11 @@ export default function Footer() {
           <div className="footer-copyright">
             <p>© 2025 Laboratorio de Diseño y Fabricación Digital - UNLaR. Todos los derechos reservados.</p>
             <p>Proyecto Federal de Innovación 2022 (PFI 2022) - COFECyT</p>
+          </div>
+          <div className="legal-links">
+            <Link to="/privacy">Política de Privacidad</Link>
+            <Link to="/terms">Términos de Servicio</Link>
+            <Link to="/cookies">Cookies</Link>
           </div>
         </div>
       </div>

@@ -1,3 +1,49 @@
+/*
+Estructura de datos esperada para la variable 'order' que se obtiene de la API:
+{
+  "id": 12345,
+  "status": "En Proceso",
+  "creationDate": "2023-10-27T10:00:00Z",
+  "doctor": {
+    "name": "Dr. Juan Perez",
+    "clinic": "Clínica Dental Sonrisa"
+  },
+  "patient": {
+    "name": "Maria Lopez",
+    "dni": "12345678X"
+  },
+  "technicalDetails": {
+    "prosthesisType": "Corona de Porcelana",
+    "measurements": "Modelo de yeso y registro de mordida",
+    "material": "Zirconio",
+    "resinType": "Acrílico Termocurable",
+    "pathology": "Bruxismo",
+    "urgency": "Normal",
+    "observations": "Asegurar color A3"
+  },
+  "billing": {
+    "invoiceId": "FAC-0001-2023",
+    "paymentStatus": "Pagado",
+    "totalAmount": 550.00,
+    "items": [
+      {
+        "name": "Corona de Porcelana",
+        "price": 500.00
+      },
+      {
+        "name": "Envío Express",
+        "price": 50.00
+      }
+    ]
+  },
+   "statusHistory": [
+    { "status": "Creado", 
+     "date": "2023-10-27T10:00:00Z", 
+     "responsible": "Dr. Juan Perez" }
+   ]
+}
+*/
+
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import '../styles/OrderDetails.css';

@@ -13,6 +13,7 @@ import AboutUs from "./views/AboutUs.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import UserDetails from "./views/UserDetails.jsx";
 import OrderDetails from "./views/OrderDetails.jsx";
+import PatientManagement from "./views/PatientManagement.jsx";
 // Componentes fijos
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -32,6 +33,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/user-details" element={<UserDetails />} />
           <Route path="/order-details" element={<OrderDetails />} />
+          <Route path="/patient-management" element={<PatientManagement />} />
         </Routes>
         <Footer />
       </Router>

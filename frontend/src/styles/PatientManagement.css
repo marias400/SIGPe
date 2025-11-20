@@ -1,0 +1,212 @@
+/* Contenedor principal */
+.patient-management-container {
+  padding: 2rem;
+  background-color: #f6f7f8;
+  min-height: 100vh;
+}
+
+/* Encabezado de la página */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #0d171b;
+  letter-spacing: -0.033em;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: #4c809a;
+}
+
+/* Tarjeta de contenido principal */
+.content-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #cfdfe7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Barra de herramientas */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #cfdfe7;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #e7eff3;
+  border-radius: 0.5rem;
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: #4c809a;
+  pointer-events: none; /* Evita que el icono interfiera con el clic en el input */
+}
+
+.search-input {
+  border: none;
+  background-color: transparent;
+  padding: 0.75rem 0.5rem 0.75rem 2.5rem; /* Añade padding a la izquierda para no solapar el icono */
+  font-size: 1rem;
+  width: 100%;
+  color: #0d171b;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: #0d171b;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.icon-button:hover {
+  background-color: rgba(17, 147, 212, 0.1);
+  color: #1193d4;
+}
+
+.primary-button {
+  background-color: #1193d4;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.primary-button:hover {
+  background-color: #0f82b9;
+}
+
+/* Tabla de pacientes */
+.table-container {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.patient-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.patient-table th,
+.patient-table td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.patient-table thead {
+  background-color: rgba(231, 239, 243, 0.5);
+}
+
+.patient-table th {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0d171b;
+}
+
+.patient-table tbody tr {
+  border-bottom: 1px solid #cfdfe7;
+}
+
+.patient-table td {
+  font-size: 0.875rem;
+  color: #0d171b;
+}
+
+.patient-table .text-muted {
+  color: #4c809a;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.icon-button-table {
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #4c809a;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.icon-button-table:hover {
+  background-color: rgba(17, 147, 212, 0.1);
+  color: #1193d4;
+}
+
+/* Paginación */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid #cfdfe7;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pagination-info {
+  font-size: 0.875rem;
+  color: #4c809a;
+}
+
+.pagination-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pagination-button {
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0d171b;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination-button:hover {
+  background-color: rgba(17, 147, 212, 0.1);
+}
+
+.pagination-button.active {
+  background-color: #1193d4;
+  color: #ffffff;
+}
