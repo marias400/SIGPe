@@ -9,7 +9,7 @@ import '../styles/Navbar.css'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import logo from "../public/assets/LogoSIGPe.png";
+import logo from "../public/assets/Logo_lab.svg";
 library.add(fas, far, fab)
 
 export default function Navbar() {

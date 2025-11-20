@@ -1,68 +1,300 @@
 /* src/styles/Footer.css */
 .footer {
-  background-color: #1D5B96; /* bg-primary-dark */
+  background: linear-gradient(135deg, #1D5B96 0%, #2C5282 100%);
   color: white;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem 2rem;
+  position: relative;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer-grid {
-  max-width: 1120px; /* equivalente a max-w-7xl */
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: 3rem;
+  margin-bottom: 2rem;
 }
 
-.footer-grid h3 {
-  font-size: 1.125rem; /* text-lg */
-  font-weight: bold;
+.footer-column h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: white;
+  position: relative;
 }
 
-.footer-grid p {
-  margin-top: 0.5rem;
-  font-size: 0.875rem; /* text-sm */
-  color: rgba(255, 255, 255, 0.7);
+.footer-column h4::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: #63B3ED;
 }
 
-.footer-grid ul {
-  margin-top: 0.5rem;
-  list-style: none;
-  padding: 0;
-}
-
-.footer-grid ul li {
-  margin-top: 0.25rem;
-}
-
-.footer-grid ul li a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer-grid ul li a:hover {
+.footer-logo h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
   color: white;
 }
 
-.footer-bottom {
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  text-align: center;
-  font-size: 0.875rem; /* text-sm */
-  color: rgba(255, 255, 255, 0.5);
+.footer-description {
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-/* Responsive */
+.footer-badge {
+  display: inline-block;
+  background: rgba(99, 179, 237, 0.2);
+  border: 1px solid rgba(99, 179, 237, 0.3);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: #63B3ED;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-links a:hover {
+  color: white;
+  transform: translateX(5px);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.contact-item strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-size: 0.875rem;
+}
+
+.contact-item p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+.contact-icon {
+  color: #63B3ED;
+  font-size: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1.125rem;
+  position: relative;
+}
+
+/* LinkedIn - Azul profesional */
+.social-link[aria-label*="LinkedIn"]:hover {
+  background: #0077b5;
+  transform: translateY(-2px);
+}
+
+/* X (Twitter) - Negro */
+.social-link[aria-label*="X"]:hover,
+.social-link[aria-label*="Twitter"]:hover {
+  background: #000000;
+  transform: translateY(-2px);
+}
+
+/* YouTube - Rojo */
+.social-link[aria-label*="YouTube"]:hover {
+  background: #ff0000;
+  transform: translateY(-2px);
+}
+
+/* Instagram - Gradiente rosa/naranja */
+.social-link[aria-label*="Instagram"]:hover {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  transform: translateY(-2px);
+}
+
+/* Facebook - Azul Facebook */
+.social-link[aria-label*="Facebook"]:hover {
+  background: #1877f2;
+  transform: translateY(-2px);
+}
+
+/* Efecto de brillo adicional en hover */
+.social-link:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.legal-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.legal-links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.legal-links a:hover {
+  color: white;
+}
+
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  margin: 2rem 0;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: center; /* Cambiado de space-between a center */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  text-align: center;
+}
+
+.footer-copyright {
+  text-align: center; /* Cambiado de left a center */
+}
+
+.footer-copyright p {
+  margin: 0.25rem 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive Design */
 @media (min-width: 768px) {
   .footer-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .footer {
+    padding: 4rem 2rem 2rem;
+  }
+  
+  .legal-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .legal-links a {
+    margin-right: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .footer {
-    padding-left: 4rem;
-    padding-right: 4rem;
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+    gap: 3rem;
   }
+  
+  .footer {
+    padding: 4rem 4rem 2rem;
+  }
+  
+  .contact-item {
+    gap: 12px;
+  }
+  
+  .contact-icon {
+    font-size: 16px;
+    width: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .footer-copyright {
+    text-align: center;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .contact-item {
+    gap: 10px;
+  }
+  
+  .contact-icon {
+    font-size: 14px;
+    width: 18px;
+  }
+}
+
+/* Estilos específicos para los iconos de Font Awesome en el footer */
+.footer-links .svg-inline--fa,
+.contact-icon .svg-inline--fa,
+.social-link .svg-inline--fa {
+  transition: transform 0.3s ease;
+}
+
+.footer-links a:hover .svg-inline--fa {
+  transform: translateX(2px);
+}
+
+.social-link:hover .svg-inline--fa {
+  transform: scale(1.1);
 }
