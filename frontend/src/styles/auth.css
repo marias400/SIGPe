@@ -1,6 +1,7 @@
 /* Container */
 .auth-container {
-  min-height: 100vh;
+  height: 100vh; 
+  overflow: hidden; 
   display: flex;
 }
 
@@ -10,9 +11,9 @@
   background: linear-gradient(135deg, #1f6aa6 0%, #5cb0e5 50%, #7dd3fc 100%);
   background-size: cover;
   background-position: center;
+  background-image: url('../public/assets/Login_image.jpg');
   display: flex;
-  align-items: center;
-  justify-content: center;
+  
 }
 
 .auth-left::before {
@@ -41,7 +42,6 @@
   background: linear-gradient(to bottom right, rgba(31, 106, 166, 0.2), rgba(92, 176, 229, 0.2));
   z-index: 1;
   pointer-events: none;
-  /* 👈 evita bloquear interacción */
 }
 
 .auth-image {
@@ -57,14 +57,14 @@
   transform: scale(1.05);
 }
 
+/* 2. En .auth-text: Volvemos a poner 'absolute' para fijarlo abajo a la izquierda */
 .auth-text {
-  position: absolute;
-  bottom: 2rem;
-  /* 👈 distancia desde abajo */
-  left: 2rem;
-  /* 👈 distancia desde la izquierda */
+  position: absolute; 
+  bottom: 2rem;       
+  left: 2rem;         
   color: white;
   z-index: 2;
+  text-align: left;   
 }
 
 @media screen and (max-width: 768px) {
@@ -74,13 +74,13 @@
 }
 
 .auth-title {
-  font-size: 3rem;
+  font-size: 2.25rem; 
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 4px; 
 }
 
 .auth-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.1rem; 
   font-weight: 300;
 }
 
@@ -89,9 +89,9 @@
   width: 100%;
   background-color: #1f6aa6;
   display: flex;
-  align-items: center;
+  align-items: center; 
   justify-content: center;
-  padding: 32px;
+  padding: 16px; 
   overflow-y: auto;
 }
 
@@ -103,23 +103,23 @@
 
 .auth-form-container {
   width: 100%;
-  max-width: 448px;
+  max-width: 400px; 
 }
-
 /* Logo */
 .auth-logo {
-  text-align: right;
-  margin-bottom: 32px;
+  text-align: center; 
+  margin-bottom: 16px; 
 }
 
 .auth-logo img {
-  width: 100%;
+  max-height: 120px; 
+  width: auto; 
 }
 
 /* Welcome Text */
 .auth-welcome {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 16px; 
 }
 
 .auth-welcome h2 {
@@ -127,6 +127,7 @@
   font-size: 1.5rem;
   font-weight: 300;
   letter-spacing: 0.05em;
+  margin: 0; 
 }
 
 /* Toggle Buttons */
@@ -134,14 +135,14 @@
   display: flex;
   background-color: white;
   border-radius: 9999px;
-  padding: 6px;
+  padding: 4px; 
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 32px;
+  margin-bottom: 16px; 
 }
 
 .auth-toggle-btn {
   flex: 1;
-  padding: 12px 24px;
+  padding: 8px 16px; 
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -166,13 +167,13 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px; 
 }
 
 .auth-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px; 
 }
 
 .auth-field-animate {
@@ -193,19 +194,20 @@
 
 .auth-field label {
   color: white;
-  font-size: 0.875rem;
+  font-size: 0.8rem; 
 }
 
 .auth-input {
   width: 100%;
-  padding: 20px 24px;
+  padding: 10px 16px; 
   border-radius: 9999px;
   background-color: white;
   color: #1f2937;
   border: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
   outline: none;
   transition: box-shadow 0.2s ease;
+  box-sizing: border-box; 
 }
 
 .auth-input::placeholder {
@@ -219,12 +221,12 @@
 /* Forgot Password Link */
 .auth-forgot-link {
   text-align: right;
-  padding-top: 4px;
+  padding-top: 2px;
 }
 
 .auth-link {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -257,7 +259,7 @@
 /* Submit Button */
 .auth-submit-btn {
   width: 100%;
-  padding: 20px;
+  padding: 12px; 
   border-radius: 9999px;
   background-color: #5cb0e5;
   color: white;
@@ -267,6 +269,7 @@
   cursor: pointer;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  margin-top: 8px; 
 }
 
 .auth-submit-btn:hover {
@@ -287,6 +290,7 @@
   }
 }
 
+/* --- MODALES (Sin cambios estructurales) --- */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -362,7 +366,7 @@
   gap: 8px;
 }
 
-/* Botones básicos si no existen en tu sistema */
+
 .btn {
   padding: 8px 14px;
   border-radius: 8px;

@@ -64,12 +64,7 @@ export default function LoginForm({ onForgotPassword, onSubmit }) {
                 </button>
             }
 
-            {/* 👇 Nuevo botón para ir al registro */}
-            <div className="auth-link-container">
-                <Link to="/register" className="auth-link">
-                    ¿No tienes cuenta? Regístrate
-                </Link>
-            </div>
+            
         </form>
     );
 }

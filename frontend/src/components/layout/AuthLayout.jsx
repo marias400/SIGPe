@@ -1,5 +1,5 @@
 import "../../styles/auth.css";
-import bg from "../../public/assets/Login_image.avif"
+
 import unlarLogo from "../../public/assets/Logo_unlar.avif"
 
 export default function AuthLayout({ children, showToggle, activeMode, onModeChange }) {
