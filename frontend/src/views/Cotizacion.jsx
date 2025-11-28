@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext.jsx";
 import "../styles/Cotizacion.css";
+import placeholderImg from "../public/assets/orthosis.avif";
 
 const API_URL = "http://localhost:8000/api";
 
@@ -619,7 +620,8 @@ export default function OrderForm() {
                       <div className="img-protesis">
                         {prosthesis.img_url ? (
                           <img
-                            src={prosthesis.img_url}
+                            src={placeholderImg}
+                            // src={prosthesis.img_url} // Descomentar cuando las imágenes estén disponibles
                             alt={prosthesis.name}
                           />
                         ) : (

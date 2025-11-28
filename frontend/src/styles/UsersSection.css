@@ -139,6 +139,14 @@
   overflow: hidden;
 }
 
+.doctors-list-container {
+  overflow: visible;
+}
+
+.doctors-table {
+  flex-grow: inherit;
+}
+
 .users-table,
 .doctors-table {
   width: 100%;
@@ -231,4 +239,21 @@
 .pagination-info {
   font-size: 0.875rem;
   color: #6b7280;
+}
+
+.users-table tbody tr.clickable-row,
+.doctors-table tbody tr.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.users-table tbody tr.clickable-row:hover,
+.doctors-table tbody tr.clickable-row:hover {
+  background-color: #f9fafb;
+}
+
+.users-table tbody tr.selected-row,
+.doctors-table tbody tr.selected-row {
+  background-color: #e0f2fe;
+  border-left: 3px solid #54abe0;
 }

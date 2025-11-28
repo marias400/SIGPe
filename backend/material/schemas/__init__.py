@@ -1,2 +1,3 @@
-from .patient import PatientCreate, PatientUpdate, PatientSchema
+from .material import MaterialSchema
 
+__all__ = ["MaterialSchema"]

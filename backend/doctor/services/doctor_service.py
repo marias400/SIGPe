@@ -5,6 +5,8 @@ from doctor.models.doctor import Doctor
 from doctor.schemas.doctor import DoctorRequest, DoctorUpdate
 from user.models.user import User
 from user.services.user_service import get_user
+from notification.services.notification_service import create_notification
+from notification.schemas.notification import NotificationCreate
 
 
 def get_doctor_by_user_id(db: Session, user_id: int):
@@ -97,12 +99,33 @@ def validate_doctor_request(db: Session, user_id: int, doctor_update: Optional[D
     db.refresh(doctor)
     db.refresh(user)
     
+    # Crear notificación de aprobación
+    try:
+        create_notification(
+            db,
+            NotificationCreate(
+                user_id=user_id,
+                order_id=None,
+                message=f"Tu solicitud de médico ha sido aprobada. Ahora puedes acceder a las funcionalidades de médico.",
+                type="Aprobación",
+                current_stage=None,
+            )
+        )
+    except Exception as e:
+        # No fallar si la notificación no se puede crear
+        pass
+    
     return doctor
 
 
 def get_all_pending_doctor_requests(db: Session):
-    """Obtiene todas las solicitudes de doctor pendientes (is_verified=False)"""
-    return db.query(Doctor).filter(Doctor.is_verified == False).all()
+    """Obtiene todas las solicitudes de doctor pendientes (is_verified=False) con información del usuario"""
+    return (
+        db.query(Doctor)
+        .options(joinedload(Doctor.user))
+        .filter(Doctor.is_verified == False)
+        .all()
+    )
 
 
 def update_doctor_info(db: Session, user_id: int, doctor_update: DoctorUpdate):
@@ -132,4 +155,52 @@ def get_all_doctors(db: Session):
         .options(joinedload(Doctor.user))
         .all()
     )
+
+
+def reject_doctor_request(db: Session, user_id: int):
+    """
+    Rechaza una solicitud de doctor.
+    Elimina el registro de doctors y crea una notificación al usuario.
+    """
+    # Verificar que el usuario existe
+    user = get_user(db, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    
+    # Verificar que existe una solicitud de doctor
+    doctor = get_doctor_by_user_id(db, user_id)
+    if not doctor:
+        raise HTTPException(
+            status_code=404,
+            detail="No se encontró una solicitud de doctor para este usuario"
+        )
+    
+    # Si ya está verificado, no se puede rechazar
+    if doctor.is_verified:
+        raise HTTPException(
+            status_code=400,
+            detail="No se puede rechazar un doctor ya verificado"
+        )
+    
+    # Crear notificación de rechazo antes de eliminar
+    try:
+        create_notification(
+            db,
+            NotificationCreate(
+                user_id=user_id,
+                order_id=None,
+                message=f"Tu solicitud de médico ha sido rechazada. Por favor, contacta con el administrador para más información.",
+                type="Rechazo",
+                current_stage=None,
+            )
+        )
+    except Exception as e:
+        # No fallar si la notificación no se puede crear
+        pass
+    
+    # Eliminar el registro de doctor
+    db.delete(doctor)
+    db.commit()
+    
+    return {"message": "Solicitud de doctor rechazada exitosamente"}
 

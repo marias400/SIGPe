@@ -3,6 +3,8 @@ import DashboardSidebar from "../components/DashboardSidebar";
 import OrdersSection from "../components/dashboard/OrdersSection";
 import MyAssignedOrdersSection from "../components/dashboard/MyAssignedOrdersSection";
 import UsersSection from "../components/dashboard/UsersSection";
+import ProsthesesSection from "../components/dashboard/ProsthesesSection";
+import ValidateDoctorsSection from "../components/dashboard/ValidateDoctorsSection";
 import ProsthesisManagementSection from "../components/dashboard/ProsthesisManagementSection";
 import NotificationsSection from "../components/dashboard/NotificationsSection";
 import StatisticsSection from "../components/dashboard/StatisticsSection";
@@ -26,6 +28,10 @@ const Dashboard = () => {
         return <MyAssignedOrdersSection />;
       case "users":
         return <UsersSection />;
+      case "prostheses":
+        return <ProsthesesSection />;
+      case "validate-doctors":
+        return <ValidateDoctorsSection />;
       case "prosthesis-management":
         return <ProsthesisManagementSection />;
       case "notifications":

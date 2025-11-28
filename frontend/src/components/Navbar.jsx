@@ -19,6 +19,22 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsDropdownOpen, setNotificationsDropdownOpen] = useState(false);
 
+  // Actualizar notificaciones automáticamente cada 30 segundos
+  useEffect(() => {
+    if (user) {
+      // Cargar notificaciones inmediatamente
+      getNotifications();
+      
+      // Configurar intervalo para actualizar cada 30 segundos
+      const interval = setInterval(() => {
+        getNotifications();
+      }, 30000); // 30 segundos
+
+      return () => clearInterval(interval);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   const handleLogout = () => {
     logout();
     navigate('/');

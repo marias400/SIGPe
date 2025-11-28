@@ -12,8 +12,8 @@ class Notification(Base):
     user_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("users.id"), nullable=False
     )
-    order_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("orders.id"), nullable=False
+    order_id: Mapped[Optional[int]] = mapped_column(
+        Integer, ForeignKey("orders.id"), nullable=True
     )
     message: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
     is_read: Mapped[bool] = mapped_column(nullable=False, default=False)

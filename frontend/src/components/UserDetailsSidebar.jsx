@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboardList, faBell, faUserEdit } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardList, faBell, faUserEdit, faUserMd } from '@fortawesome/free-solid-svg-icons';
 import "../styles/DashboardSidebar.css";
 
 const UserDetailsSidebar = ({ activeSection, setActiveSection }) => {
@@ -8,6 +8,7 @@ const UserDetailsSidebar = ({ activeSection, setActiveSection }) => {
     { id: 'orders', label: 'Pedidos', icon: faClipboardList },
     { id: 'notifications', label: 'Notificaciones', icon: faBell },
     { id: 'edit', label: 'Editar Datos', icon: faUserEdit },
+    { id: 'request-role', label: 'Solicitar Rol', icon: faUserMd },
   ];
 
   return (

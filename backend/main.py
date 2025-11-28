@@ -25,6 +25,9 @@ from patient.routes.patient_router import patient_router
 from notification.routes.notification_router import notification_router
 from observation.routes.observation_router import observation_router
 from speciality.routes.speciality_router import speciality_router
+from prosthesis.routes.prosthesis_router import prosthesis_router
+from material.routes.material_router import material_router
+from size.routes.size_router import size_router
 
 openapi_tags = [
     {
@@ -60,6 +63,18 @@ openapi_tags = [
         "description": "Speciality operations",
     },
     {
+        "name": "Prostheses",
+        "description": "Prosthesis operations",
+    },
+    {
+        "name": "Materials",
+        "description": "Material operations",
+    },
+    {
+        "name": "Sizes",
+        "description": "Size operations",
+    },
+    {
         "name": "Health Checks",
         "description": "Application health checks",
     },
@@ -87,6 +102,9 @@ app.include_router(patient_router, prefix="/api", tags=["Patients"])
 app.include_router(notification_router, prefix="/api", tags=["Notifications"])
 app.include_router(observation_router, prefix="/api", tags=["Observations"])
 app.include_router(speciality_router, prefix="/api", tags=["Specialities"])
+app.include_router(prosthesis_router, prefix="/api", tags=["Prostheses"])
+app.include_router(material_router, prefix="/api", tags=["Materials"])
+app.include_router(size_router, prefix="/api", tags=["Sizes"])
 
 
 @app.get("/health", tags=["Health Checks"])

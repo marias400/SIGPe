@@ -54,6 +54,8 @@ def update_user(db: Session, user_id: int, user_update):
         db_user.name = user_update.name
     if user_update.lastname is not None:
         db_user.lastname = user_update.lastname
+    # if user_update.user_type is not None:
+    #     db_user.user_type = user_update.user_type
     if user_update.password is not None:
         db_user.password = get_password_hash(user_update.password)
 

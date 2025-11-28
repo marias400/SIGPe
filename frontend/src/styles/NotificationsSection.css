@@ -52,24 +52,27 @@
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   padding: 1.5rem;
-  max-height: 80vh;
   display: flex;
   flex-direction: column;
+  height: fit-content;
 }
 
 .notifications-list-container h2 {
   margin: 0 0 1rem 0;
   color: #111827;
   font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 .notifications-list {
-  flex: 1;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 1rem;
+  /* Altura fija para aproximadamente 5 items (cada item ~80px) */
+  max-height: calc(5 * 80px + 4 * 0.75rem);
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .notification-item {

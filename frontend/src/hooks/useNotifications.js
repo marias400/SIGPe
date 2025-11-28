@@ -32,5 +32,6 @@ export const useNotifications = (user) => {
     }
   }, [user]);
 
+  // Exponer función para refrescar manualmente
   return { notificationsAmount, getNotifications, unreadNotifications };
 };

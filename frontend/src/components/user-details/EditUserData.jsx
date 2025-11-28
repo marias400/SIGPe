@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../../styles/EditUserData.css";
 
-const API_URL = "http://localhost:8000/api";
 
 const EditUserData = () => {
-  const { authFetch, user, logout } = useContext(AuthContext);
+  const { authFetch, user, logout, refreshUserData } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -79,7 +78,7 @@ const EditUserData = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -93,11 +92,14 @@ const EditUserData = () => {
         name: formData.name,
         lastname: formData.lastname,
         email: formData.email,
+        user_type: user.user_type,
       };
 
       // Only include password if it's provided
       if (formData.password) {
         updateData.password = formData.password;
+      } else {
+        updateData.password = null; // Indicate no password change
       }
 
       const res = await authFetch(`/users/${user.id}`, {
@@ -110,16 +112,17 @@ const EditUserData = () => {
 
       if (res.ok) {
         setSuccessMessage("Datos actualizados correctamente");
+        refreshUserData();
         // Clear password fields
         setFormData((prev) => ({
           ...prev,
           password: "",
           confirmPassword: "",
         }));
-        // Reload user data
-        window.location.reload();
+
       } else {
         const errorData = await res.json();
+        console.error(JSON.stringify(errorData))
         setErrors({ submit: errorData.detail || "Error al actualizar los datos" });
       }
     } catch (error) {

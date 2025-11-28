@@ -1,10 +1,12 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from fastapi import HTTPException
 from order.models.order import Order
 from order.schemas.order import OrderCreate, OrderUpdate
 from order.models.medical_order import MedicalOrder
 from order.schemas.medical_order import MedicalOrderCreate
 from user.services.user_service import get_user, user_is_doctor
+from notification.services.notification_service import create_notification
+from notification.schemas.notification import NotificationCreate
 
 
 def create_order(db: Session, user_id: int, order: OrderCreate):
@@ -33,8 +35,9 @@ def create_order(db: Session, user_id: int, order: OrderCreate):
     db.add(db_order)
     db.commit()
     db.refresh(db_order)
-
-    return db_order
+    
+    # Recargar con relaciones para devolver datos completos
+    return get_order(db, db_order.id)
 
 
 def create_medical_order(db: Session, user_id: int, medical_order: MedicalOrderCreate):
@@ -64,35 +67,97 @@ def create_medical_order(db: Session, user_id: int, medical_order: MedicalOrderC
 
 
 def get_order(db: Session, order_id: int):
-    """Obtiene una orden por su ID"""
-    return db.query(Order).filter(Order.id == order_id).first()
+    """Obtiene una orden por su ID con relaciones cargadas"""
+    return (
+        db.query(Order)
+        .options(
+            joinedload(Order.user),
+            joinedload(Order.prosthesis),
+            joinedload(Order.material),
+            joinedload(Order.technician),
+        )
+        .filter(Order.id == order_id)
+        .first()
+    )
 
 
 def get_orders_by_user_id(db: Session, user_id: int):
-    """Obtiene todas las órdenes de un usuario"""
-    return db.query(Order).filter(Order.user_id == user_id).all()
+    """Obtiene todas las órdenes de un usuario con relaciones cargadas.
+    Ordena por fecha de creación descendente (más recientes primero).
+    """
+    return (
+        db.query(Order)
+        .options(
+            joinedload(Order.user),
+            joinedload(Order.prosthesis),
+            joinedload(Order.material),
+            joinedload(Order.technician),
+        )
+        .filter(Order.user_id == user_id)
+        .order_by(Order.created_at.desc())
+        .all()
+    )
 
 
 def get_all_orders(db: Session, skip: int = 0, limit: int = 100):
-    """Obtiene todas las órdenes con paginación"""
-    return db.query(Order).offset(skip).limit(limit).all()
+    """
+    Obtiene todas las órdenes con sus relaciones cargadas.
+    Ordena por fecha de creación descendente (más recientes primero).
+    """
+    return (
+        db.query(Order)
+        .options(
+            joinedload(Order.user),
+            joinedload(Order.prosthesis),
+            joinedload(Order.material),
+            joinedload(Order.technician),
+        )
+        .order_by(Order.created_at.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
 
 
 def update_order(db: Session, order_id: int, order_update: OrderUpdate):
-    """Actualiza una orden"""
+    """Actualiza una orden y crea notificación si cambia current_stage y hay mensaje"""
     db_order = get_order(db, order_id)
     if not db_order:
         raise HTTPException(status_code=404, detail="Orden no encontrada")
 
-    # Actualizar solo los campos proporcionados
-    update_data = order_update.model_dump(exclude_unset=True)
+    # Guardar el current_stage anterior para comparar
+    old_current_stage = db_order.current_stage
+    
+    # Extraer notification_message antes de actualizar
+    notification_message = order_update.notification_message
+    
+    # Actualizar solo los campos proporcionados (excluyendo notification_message)
+    update_data = order_update.model_dump(exclude_unset=True, exclude={'notification_message'})
     for field, value in update_data.items():
         setattr(db_order, field, value)
 
     db.commit()
     db.refresh(db_order)
-
-    return db_order
+    
+    # Si cambió current_stage y hay un mensaje, crear notificación para el usuario de la orden
+    if (old_current_stage != db_order.current_stage and 
+        notification_message and 
+        db_order.user_id):
+        try:
+            notification = NotificationCreate(
+                user_id=db_order.user_id,
+                order_id=order_id,
+                message=notification_message,
+                type="aviso",
+                current_stage=db_order.current_stage,
+            )
+            create_notification(db, notification)
+        except Exception as e:
+            # No fallar la actualización si falla la notificación
+            print(f"Error al crear notificación: {e}")
+    
+    # Recargar con relaciones para devolver datos completos
+    return get_order(db, db_order.id)
 
 
 def delete_order(db: Session, order_id: int):

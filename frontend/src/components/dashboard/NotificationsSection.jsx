@@ -90,11 +90,8 @@ const NotificationsSection = () => {
     }
   };
 
-  // Calculate pagination
-  const totalPages = Math.ceil(filteredNotifications.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedNotifications = filteredNotifications.slice(startIndex, endIndex);
+  // Mostrar todas las notificaciones (sin paginación, con scroll)
+  const paginatedNotifications = filteredNotifications;
 
   // Calculate stats
   const stats = {
@@ -152,28 +149,6 @@ const NotificationsSection = () => {
                 ))}
               </div>
 
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="pagination">
-                  <button
-                    className="pagination-btn"
-                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    disabled={currentPage === 1}
-                  >
-                    Anterior
-                  </button>
-                  <span className="pagination-info">
-                    Página {currentPage} de {totalPages}
-                  </span>
-                  <button
-                    className="pagination-btn"
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    disabled={currentPage === totalPages}
-                  >
-                    Siguiente
-                  </button>
-                </div>
-              )}
             </>
           )}
         </div>

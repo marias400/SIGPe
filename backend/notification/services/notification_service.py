@@ -11,7 +11,7 @@ def create_notification(db: Session, notification: NotificationCreate):
     """Crea una nueva notificación"""
     db_notification = Notification(
         user_id=notification.user_id,
-        order_id=notification.order_id,
+        order_id=notification.order_id if notification.order_id else None,
         message=notification.message,
         type=notification.type,
         current_stage=notification.current_stage,

@@ -1,2 +1,3 @@
-from .patient import PatientCreate, PatientUpdate, PatientSchema
+from .prosthesis import ProsthesisSchema
 
+__all__ = ["ProsthesisSchema"]
