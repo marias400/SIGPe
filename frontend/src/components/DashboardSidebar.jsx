@@ -1,15 +1,31 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboardList, faUsers, faStethoscope, faBell, faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faClipboardList,
+  faUsers,
+  faStethoscope,
+  faBell,
+  faUserCheck,
+  faChartPie,
+} from "@fortawesome/free-solid-svg-icons";
 import "../styles/DashboardSidebar.css";
 
 const DashboardSidebar = ({ activeSection, setActiveSection }) => {
   const menuItems = [
-    { id: 'orders', label: 'Pedidos', icon: faClipboardList },
-    { id: 'my-assigned-orders', label: 'Mis Pedidos Asignados', icon: faUserCheck },
-    { id: 'users', label: 'Usuarios', icon: faUsers },
-    { id: 'prostheses', label: 'Prótesis', icon: faStethoscope },
-    { id: 'notifications', label: 'Notificaciones', icon: faBell },
+    { id: "orders", label: "Pedidos", icon: faClipboardList },
+    {
+      id: "my-assigned-orders",
+      label: "Mis Pedidos Asignados",
+      icon: faUserCheck,
+    },
+    { id: "users", label: "Usuarios", icon: faUsers },
+    {
+      id: "prosthesis-management",
+      label: "Cargar Prótesis",
+      icon: faStethoscope,
+    },
+    { id: "notifications", label: "Notificaciones", icon: faBell },
+    { id: "statistics", label: "Estadísticas", icon: faChartPie },
   ];
 
   return (
@@ -21,7 +37,9 @@ const DashboardSidebar = ({ activeSection, setActiveSection }) => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            className={`sidebar-item ${activeSection === item.id ? 'active' : ''}`}
+            className={`sidebar-item ${
+              activeSection === item.id ? "active" : ""
+            }`}
             onClick={() => setActiveSection(item.id)}
           >
             <FontAwesomeIcon icon={item.icon} className="sidebar-icon" />
@@ -34,4 +52,3 @@ const DashboardSidebar = ({ activeSection, setActiveSection }) => {
 };
 
 export default DashboardSidebar;
-

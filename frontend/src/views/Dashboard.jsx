@@ -3,8 +3,9 @@ import DashboardSidebar from "../components/DashboardSidebar";
 import OrdersSection from "../components/dashboard/OrdersSection";
 import MyAssignedOrdersSection from "../components/dashboard/MyAssignedOrdersSection";
 import UsersSection from "../components/dashboard/UsersSection";
-import ProsthesesSection from "../components/dashboard/ProsthesesSection";
+import ProsthesisManagementSection from "../components/dashboard/ProsthesisManagementSection";
 import NotificationsSection from "../components/dashboard/NotificationsSection";
+import StatisticsSection from "../components/dashboard/StatisticsSection";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../auth/AuthContext.jsx";
@@ -14,8 +15,8 @@ const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const [activeSection, setActiveSection] = useState("orders");
   const navigate = useNavigate();
-  if (!user || (user.user_type !== 'tecnico')) {
-    navigate('/');
+  if (!user || user.user_type !== "tecnico") {
+    navigate("/");
   }
   const renderSection = () => {
     switch (activeSection) {
@@ -25,10 +26,12 @@ const Dashboard = () => {
         return <MyAssignedOrdersSection />;
       case "users":
         return <UsersSection />;
-      case "prostheses":
-        return <ProsthesesSection />;
+      case "prosthesis-management":
+        return <ProsthesisManagementSection />;
       case "notifications":
         return <NotificationsSection />;
+      case "statistics":
+        return <StatisticsSection />;
       default:
         return <OrdersSection />;
     }
@@ -36,10 +39,11 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <DashboardSidebar activeSection={activeSection} setActiveSection={setActiveSection} />
-      <main className="dashboard-main-content">
-        {renderSection()}
-      </main>
+      <DashboardSidebar
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
+      <main className="dashboard-main-content">{renderSection()}</main>
     </div>
   );
 };

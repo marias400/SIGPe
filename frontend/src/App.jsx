@@ -5,8 +5,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext.jsx";
-import PageNotFound from './views/PageNotFound.jsx';
-import Login from './views/Login.jsx';
+import PageNotFound from "./views/PageNotFound.jsx";
+import Login from "./views/Login.jsx";
 import Cotizacion from "./views/Cotizacion.jsx";
 import Home from "./views/Home.jsx";
 import AboutUs from "./views/AboutUs.jsx";
@@ -14,12 +14,12 @@ import Dashboard from "./views/Dashboard.jsx";
 import UserDetails from "./views/UserDetails.jsx";
 import OrderDetails from "./views/OrderDetails.jsx";
 import PatientManagement from "./views/PatientManagement.jsx";
+import TestPage from "./views/TestPage.jsx";
 // Componentes fijos
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 function App() {
-
   return (
     <AuthProvider>
       <Router>
@@ -34,11 +34,12 @@ function App() {
           <Route path="/user-details" element={<UserDetails />} />
           <Route path="/order-details" element={<OrderDetails />} />
           <Route path="/patient-management" element={<PatientManagement />} />
+          <Route path="/test" element={<TestPage />} />
         </Routes>
         <Footer />
       </Router>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;
