@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import "../../styles/MyAssignedOrdersSection.css";
 
-const API_URL = "http://localhost:8000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
 const MyAssignedOrdersSection = () => {
   const { authFetch, user } = useContext(AuthContext);
