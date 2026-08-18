@@ -28,37 +28,12 @@
 | **backend** | FastAPI API (`uvicorn`), `rootDirectory=backend` | [backend-production-89b01.up.railway.app](https://backend-production-89b01.up.railway.app) — interactive docs at `/docs` |
 | **MySQL-gOF5** | MySQL 9.4 database (official image) | only reachable over Railway's private network |
 
-### How each service is set up
-
-- **backend**: built with Railpack (auto-detects Python/`requirements.txt`), `rootDirectory: backend`, `startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT`, and a `preDeployCommand: python scripts/load_schema.py` that loads the schema (`database/db_schema.sql`) into Railway's MySQL **idempotently** — if the database already has data, it skips re-running the dump. `MYSQL_SERVER`, `MYSQL_PORT`, `MYSQL_USERNAME`, and `MYSQL_PASSWORD` are wired by reference to the `MySQL-gOF5` service (`${{MySQL-gOF5.MYSQLHOST}}`, etc.), and `MYSQL_DATABASE=sigpe_test`.
-- **frontend**: `rootDirectory: frontend`, `buildCommand: npm run build`, `startCommand: npm run preview -- --host 0.0.0.0 --port $PORT`. The backend URL is injected at build time via `VITE_API_URL`.
-- **MySQL-gOF5**: `mysql:9.4` image with a persistent volume mounted at `/var/lib/mysql`.
-
-### Relevant environment variables
-
-**backend:** `DOMAIN`, `ENVIRONMENT`, `JWT_SECRET_KEY`, `BACKEND_CORS_ORIGINS`, `MYSQL_USERNAME`, `MYSQL_PASSWORD`, `MYSQL_SERVER`, `MYSQL_PORT`, `MYSQL_DATABASE` (+ optionally `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `AWS_S3_BUCKET_NAME` for uploading 3D models to S3).
-
-**frontend:** `VITE_API_URL` (the backend's public URL + `/api`).
-
-### Issues found and fixed during deployment
-
-While finishing the deployment, we found and fixed the following:
-
-1. **Backend/DB weren't connecting**: the backend's `MYSQL_*` variables weren't wired to the project's actual MySQL service (different names than the ones the plugin exposes). Fixed by pointing them by reference at the `MySQL-gOF5` service.
-2. **Broken `preDeployCommand`**: the backend had `python scripts/load_schema.py` configured, but that file didn't exist in the repo. We wrote the script (parses the MySQL dump respecting the `DELIMITER` changes used by triggers/procedures, and is idempotent).
-3. **The schema never reached the container**: with `rootDirectory: backend`, Railway only packages that folder — `database/db_schema.sql` (at the repo root) was outside the build context. Added a copy at `backend/database/db_schema.sql`.
-4. **Frontend was never deployed**: no service existed for it on Railway. Created one pointing at the same repo with `rootDirectory: frontend`.
-5. **Hardcoded backend URL**: the frontend had `http://localhost:8000/api` hardcoded in 12 files. Replaced with `import.meta.env.VITE_API_URL`, configurable per environment.
-6. **Vite blocked Railway's domain**: Vite 5+ rejects any unrecognized `Host` header by default (`Blocked request. This host is not allowed`), which breaks `vite preview` behind Railway's proxy. Enabled `preview.allowedHosts: true` in `vite.config.js`.
-
 ## &#x1F465; Team Members
 - **Agustín Álvarez** — Product Owner / Scrum Manager
 - **Mariano Arias Simone** — Scrum Master / Back-End Developer
 - **Mateo Sánchez** — Front-End Developer
 - **Lucas de la Fuente** — Front-End Developer
 - **Jorge Padula** — Back-End Developer
-- **Jeremías Álvarez** — QA/Testing
-- **Nahuel Peralta** — UX/UI
 
 ## &#x1F310; Reference Sites
 - **[Scrum Guide (official Scrum guide)](https://scrumguides.org/)**
