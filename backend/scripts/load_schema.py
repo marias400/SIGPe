@@ -21,8 +21,15 @@ from pathlib import Path
 
 import pymysql
 
-# backend/scripts/load_schema.py -> repo_root/database/db_schema.sql
-SCHEMA_FILE = Path(__file__).resolve().parent.parent.parent / "database" / "db_schema.sql"
+# backend/scripts/load_schema.py -> backend/database/db_schema.sql
+#
+# NOTA: Railway construye el servicio con rootDirectory=backend, por lo que
+# sólo el contenido de backend/ llega al contenedor. database/db_schema.sql
+# (en la raíz del repo) NO está disponible en runtime, así que se mantiene
+# una copia en backend/database/db_schema.sql. Si el schema fuente
+# (database/db_schema.sql, en la raíz del repo) cambia, hay que sincronizar
+# también esta copia.
+SCHEMA_FILE = Path(__file__).resolve().parent.parent / "database" / "db_schema.sql"
 
 MARKER_TABLE = "users"
 
